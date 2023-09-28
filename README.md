@@ -1,3 +1,8 @@
+# TODO
+
+---
+## GPT suggestion
+
 The current Monad class is quite comprehensive, and it offers a rich set of functionalities. However, there are always additional utilities and improvements that can be considered, depending on the specific use cases and requirements. Here are some ideas for further enhancements:
 
 ### 1. **Enhance Error Handling:**
