@@ -26,7 +26,8 @@
     "build": "tsc",
     "start": "ts-node src/index.ts",
     "test": "jest --verbose",
-    "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix"
+    "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
+    "docs": "typedoc --options typedoc.json ./src"
   },
   "jest": {
     "transform": {
@@ -51,6 +52,7 @@
     "prettier": "^3.0.3",
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.1",
+    "typedoc": "^0.25.1",
     "typescript": "^5.2.2"
   }
 }

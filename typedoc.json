@@ -1,0 +1,8 @@
+{
+  "out": "./docs",
+  "exclude": ["**/node_modules/**", "**/__tests__/**", "**/*.test.ts", "**/mock.*"],
+  "theme": "default",
+  "compilerOptions": {
+    "ignoreCompilerErrors": true
+  }
+}
