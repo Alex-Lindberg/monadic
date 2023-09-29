@@ -5,8 +5,13 @@
   "keywords": [],
   "author": "Alex Lindberg",
   "license": "ISC",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.js",
+  "files": [
+    "/dist"
+  ],
   "scripts": {
+    "build": "tsc",
     "start": "ts-node src/index.ts",
     "test": "jest --verbose"
   },

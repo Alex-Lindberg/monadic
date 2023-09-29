@@ -11,6 +11,7 @@
     "outDir": "dist"
   },
   "include": ["src/**/*"],
+  "exclude": ["node_modules", "**/*.test.ts", "**/*.spec.ts", "src/mock.ts"],
   "types": ["src/contextMonad.d.ts"],
   "lib": ["es2015"]
 }
