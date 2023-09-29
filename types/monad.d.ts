@@ -44,5 +44,5 @@ export declare class Monad<T, E = Error> {
   tap(fn: (value: T) => T | void | Promise<void>): Monad<T, E>;
   fold<U>(onSuccess: (value: T) => U, onFailure: (error: E) => U): Promise<FoldResult<U>>;
   log<L>(logger?: L, transformer?: (either: Either<T, E>) => any): Monad<T, E>;
-  run(): Promise<Either<T, E>>;
+  yield(): Promise<Either<T, E>>;
 }

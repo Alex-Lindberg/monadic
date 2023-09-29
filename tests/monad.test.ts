@@ -44,7 +44,7 @@ const basicMonadTests = () => {
       .flatMap(verifyInput)
       .flatMap(asyncFetchAdditionalData)
       .flatMap(remapData)
-      .run();
+      .yield();
     expect(result.isSuccess()).toBe(true);
     if (result.isSuccess()) {
       expect(result.value).toEqual({ customer: { name: "Alice", age: 30 } });
@@ -57,7 +57,7 @@ const basicMonadTests = () => {
       .flatMap(verifyInput)
       .flatMap(asyncFetchAdditionalData)
       .flatMap(remapData);
-    const result = await monad.run();
+    const result = await monad.yield();
     expect(result.isSuccess()).toBe(false);
     if (!result.isSuccess()) {
       expect(result.error).toBe("Invalid input");
@@ -70,7 +70,7 @@ const basicMonadTests = () => {
       .flatMap(verifyInput)
       .flatMap((data) => ({ ...data, age: 30 })) // synchronous operation
       .flatMap((data) => ({ customer: { ...data } })) // synchronous operation
-      .run();
+      .yield();
     expect(result.isSuccess()).toBe(true);
     if (result.isSuccess()) {
       expect(result.value).toEqual({ customer: { name: "Alice", age: 30 } });
@@ -81,7 +81,7 @@ const basicMonadTests = () => {
     const badRequest: RequestType = { name: "" }; // This should fail verification
     const result = await Monad.of(badRequest)
       .flatMap(verifyInput) // This should throw an error
-      .run();
+      .yield();
     expect(result.isSuccess()).toBe(false);
     if (!result.isSuccess()) {
       expect(result.error).toBe("Invalid input");
@@ -94,7 +94,7 @@ const basicMonadTests = () => {
     const asyncFetchAdditionalDataWithError = async (data: VerifiedRequestType) => {
       throw new Error("Async error");
     };
-    const result = await Monad.of(badRequest).flatMap(asyncFetchAdditionalDataWithError).run();
+    const result = await Monad.of(badRequest).flatMap(asyncFetchAdditionalDataWithError).yield();
     expect(result.isSuccess()).toBe(false);
     if (!result.isSuccess()) {
       expect(result.error).toBe("Async error");
@@ -104,7 +104,7 @@ const basicMonadTests = () => {
   it("works with various data types", async () => {
     const request = 5; // Using a number instead of an object
     const double = (x: number) => x * 2; // Synchronous operation to double the number
-    const result = await Monad.of(request).flatMap(double).run();
+    const result = await Monad.of(request).flatMap(double).yield();
     expect(result.isSuccess()).toBe(true);
     if (result.isSuccess()) {
       expect(result.value).toBe(10); // Expecting doubled value
@@ -118,7 +118,7 @@ const basicMonadTests = () => {
       .flatMap(verifyInput)
       .flatMap(asyncFetchAdditionalData)
       .map((data) => ({ customer: { ...data, height: 168 } }))
-      .run();
+      .yield();
 
     expect(result.isSuccess()).toBe(true);
     if (result.isSuccess()) {
@@ -135,7 +135,7 @@ const basicMonadTests = () => {
       .flatMap(verifyInput)
       .flatMap(asyncFetchAdditionalData)
       .map(async (data) => ({ customer: { ...data } })) // Misusing map with async function
-      .run();
+      .yield();
 
     expect(result.isSuccess()).toBe(true);
     if (result.isSuccess()) {
@@ -150,7 +150,7 @@ const basicMonadTests = () => {
       .flatMap(verifyInput)
       .flatMap(asyncFetchAdditionalData)
       .flatMap(async (data) => ({ customer: { ...data } })) // Correctly using flatMap with async function
-      .run();
+      .yield();
 
     expect(result.isSuccess()).toBe(true);
     if (result.isSuccess()) {
@@ -165,7 +165,7 @@ const basicMonadTests = () => {
     const result = await Monad.of<RequestType>(badRequest)
       .flatMap(verifyInput) // This should fail
       .map((data) => ({ customer: { ...data, added: true } })) // This should not be applied
-      .run();
+      .yield();
 
     expect(result.isSuccess()).toBe(false);
     if (!result.isSuccess()) {
@@ -180,7 +180,7 @@ const basicMonadTests = () => {
     const result = await Monad.of<RequestType>(badRequest)
       .flatMap(verifyInput)
       .recover((_) => ({ name: "Default Name" })) // Recovering from Failure
-      .run();
+      .yield();
 
     expect(result.isSuccess()).toBe(true);
     if (result.isSuccess()) {
@@ -198,7 +198,7 @@ const advancedMonadTests = () => {
     const result = await Monad.of(request)
       .flatMap(verifyInput)
       .flatMap(nestedMonad) // This returns a Monad
-      .run();
+      .yield();
 
     expect(result.isSuccess()).toBe(true);
     if (result.isSuccess()) {
@@ -213,7 +213,7 @@ const advancedMonadTests = () => {
       .flatMap(verifyInput) // This should pass
       .map((data) => ({ ...data, modified: true })) // This should be applied
       .flatMap(asyncFetchAdditionalDataWithError) // This should fail
-      .run();
+      .yield();
 
     expect(result.isSuccess()).toBe(false);
     if (!result.isSuccess()) {
@@ -230,7 +230,7 @@ const advancedMonadTests = () => {
         if (request.name === "Alice") throw new Error("Error in map"); // Throwing an error in map
         return data;
       })
-      .run();
+      .yield();
 
     expect(result.isSuccess()).toBe(false);
     if (!result.isSuccess()) {
@@ -244,7 +244,7 @@ const advancedMonadTests = () => {
       names: ["Alice", "Bob"],
       matched: [true, true],
     });
-    const result = await Monad.of<RequestType>(request).flatMap(verifyInput).match(matches).run();
+    const result = await Monad.of<RequestType>(request).flatMap(verifyInput).match(matches).yield();
     expect(result.isSuccess()).toBe(true);
     if (result.isSuccess()) {
       expect(result.value).toEqual({ name: "Alice", matched: true });
@@ -257,7 +257,7 @@ const advancedMonadTests = () => {
       names: ["Alice", "Bob"],
       matched: [true, true],
     });
-    const result = await Monad.of<RequestType>(request).flatMap(verifyInput).match(matches).run();
+    const result = await Monad.of<RequestType>(request).flatMap(verifyInput).match(matches).yield();
 
     expect(result.isSuccess()).toBe(false);
     if (!result.isSuccess()) {
@@ -274,7 +274,7 @@ const advancedMonadTests = () => {
     const result = await Monad.of<RequestType>(request)
       .flatMap(verifyInput)
       .match(matches, { continueIfNoMatch: true })
-      .run();
+      .yield();
 
     expect(result.isSuccess()).toBe(true);
     if (result.isSuccess()) {
@@ -289,7 +289,7 @@ const advancedMonadTests = () => {
     const result = await Monad.of<RequestType>(request)
       .flatMap(verifyInput)
       .match(matches) // Default is continueIfNoMatch=false
-      .run();
+      .yield();
 
     expect(result.isSuccess()).toBe(false);
     if (!result.isSuccess()) {
@@ -304,7 +304,7 @@ const advancedMonadTests = () => {
     const result = await Monad.of<RequestType>(request)
       .flatMap(verifyInput)
       .match(matches) // Default is continueIfNoMatch=false
-      .run();
+      .yield();
 
     expect(result.isSuccess()).toBe(false);
     if (!result.isSuccess()) {
@@ -324,7 +324,7 @@ const advancedMonadTests = () => {
       },
     ];
 
-    const result = await Monad.of<RequestType>(request).flatMap(verifyInput).match(matches).run();
+    const result = await Monad.of<RequestType>(request).flatMap(verifyInput).match(matches).yield();
 
     expect(result.isSuccess()).toBe(false);
     if (!result.isSuccess()) {
@@ -345,7 +345,7 @@ const advancedMonadTests = () => {
     const result = await Monad.of<RequestType>(request)
       .flatMap(verifyInput)
       .match(matches, { continueOnError: true })
-      .run();
+      .yield();
     expect(result.isSuccess()).toBe(true);
     if (result.isSuccess()) {
       expect(result.value).toEqual({ name: "Alice" });
@@ -368,7 +368,7 @@ const advancedMonadTests = () => {
       },
     ];
 
-    const result = await Monad.of<RequestType>(request).flatMap(verifyInput).match(matches).run();
+    const result = await Monad.of<RequestType>(request).flatMap(verifyInput).match(matches).yield();
 
     expect(result.isSuccess()).toBe(true);
     if (result.isSuccess()) {
@@ -398,7 +398,7 @@ const advancedMonadTests = () => {
       },
     ];
 
-    const result = await Monad.of<RequestType>(request).flatMap(verifyInput).match(matches).run();
+    const result = await Monad.of<RequestType>(request).flatMap(verifyInput).match(matches).yield();
 
     expect(result.isSuccess()).toBe(true);
     if (result.isSuccess()) {
@@ -420,7 +420,7 @@ const advancedMonadTests = () => {
         },
       },
     ];
-    const result = await Monad.of<RequestType>(request).flatMap(verifyInput).match(matches).run();
+    const result = await Monad.of<RequestType>(request).flatMap(verifyInput).match(matches).yield();
     expect(result.isSuccess()).toBe(false);
     if (!result.isSuccess()) {
       expect(result.error).toBe("Action rejected");
@@ -437,7 +437,7 @@ const advancedMonadTests = () => {
       const monad2 = { monad: Monad.of<number>(30) };
 
       const combined = Monad.zip(monad1, monad2);
-      const result = await combined.run();
+      const result = await combined.yield();
 
       expect(result.isSuccess()).toBe(true);
       if (result.isSuccess()) {
@@ -452,7 +452,7 @@ const advancedMonadTests = () => {
       };
       const monad2 = { monad: Monad.fail<number, string>("Second error") };
       const combined = Monad.zip(monad1, monad2); // Corrected the function call
-      const result = await combined.run();
+      const result = await combined.yield();
 
       expect(result.isSuccess()).toBe(false);
       if (!result.isSuccess()) {
@@ -468,7 +468,7 @@ const advancedMonadTests = () => {
       };
       const monad2 = { monad: Monad.of<number>(30), name: "otherMonad" };
       const combined = Monad.zip(monad1, monad2); // Corrected the function call
-      const result = await combined.run();
+      const result = await combined.yield();
 
       expect(result.isSuccess()).toBe(true);
       if (result.isSuccess()) {
@@ -488,7 +488,7 @@ const advancedMonadTests = () => {
       const monad3 = { monad: Monad.of<boolean>(true), name: "booleanMonad" };
 
       const combined = Monad.zip([monad1, monad2, monad3]);
-      const result = await combined.run();
+      const result = await combined.yield();
 
       expect(result.isSuccess()).toBe(true);
       if (result.isSuccess()) {
@@ -511,7 +511,7 @@ const advancedMonadTests = () => {
         name: "booleanMonad",
       };
       const combined = Monad.zip([monad1, monad2, monad3]);
-      const result = await combined.run();
+      const result = await combined.yield();
 
       expect(result.isSuccess()).toBe(false);
       if (!result.isSuccess()) {
@@ -524,7 +524,7 @@ const advancedMonadTests = () => {
     it("returns the value when the predicate is satisfied", async () => {
       const monad = Monad.of<number>(5);
       const filtered = monad.filter((value) => value > 0);
-      const result = await filtered.run();
+      const result = await filtered.yield();
 
       expect(result.isSuccess()).toBe(true);
       if (result.isSuccess()) {
@@ -535,7 +535,7 @@ const advancedMonadTests = () => {
     it("returns default error when the predicate is not satisfied", async () => {
       const monad = Monad.of<number>(-5);
       const filtered = monad.filter((value) => value > 0);
-      const result = await filtered.run();
+      const result = await filtered.yield();
 
       expect(result.isSuccess()).toBe(false);
       if (!result.isSuccess()) {
@@ -549,7 +549,7 @@ const advancedMonadTests = () => {
         (value) => value > 0,
         () => "Custom Error",
       );
-      const result = await filtered.run();
+      const result = await filtered.yield();
 
       expect(result.isSuccess()).toBe(false);
       if (!result.isSuccess()) {
@@ -563,7 +563,7 @@ const advancedMonadTests = () => {
         (value) => value > 0,
         () => "Custom Error",
       );
-      const result = await filtered.run();
+      const result = await filtered.yield();
 
       expect(result.isSuccess()).toBe(false);
       if (!result.isSuccess()) {
@@ -577,7 +577,7 @@ const advancedMonadTests = () => {
         age: 30,
       }).filter((value) => value.age >= 18);
 
-      const result = await monad.run();
+      const result = await monad.yield();
       expect(result.isSuccess()).toBe(true);
       if (result.isSuccess()) {
         expect(result.value.age).toBe(30);
@@ -587,7 +587,7 @@ const advancedMonadTests = () => {
     it("filters an array", async () => {
       const monad = Monad.of<number[]>([1, 2, 3, 4, 5]).filter((value) => value.includes(3));
 
-      const result = await monad.run();
+      const result = await monad.yield();
       expect(result.isSuccess()).toBe(true);
       if (result.isSuccess()) {
         expect(result.value).toEqual([1, 2, 3, 4, 5]);
@@ -600,7 +600,7 @@ const advancedMonadTests = () => {
         () => "Not an adult",
       );
 
-      const result = await monad.run();
+      const result = await monad.yield();
       expect(result.isSuccess()).toBe(false);
       if (!result.isSuccess()) {
         expect(result.error).toBe("Not an adult");
@@ -612,7 +612,7 @@ const advancedMonadTests = () => {
         .filter((value) => value >= 10)
         .filter((value) => value <= 30);
 
-      const result = await monad.run();
+      const result = await monad.yield();
       expect(result.isSuccess()).toBe(true);
       if (result.isSuccess()) {
         expect(result.value).toBe(20);
@@ -625,7 +625,7 @@ const advancedMonadTests = () => {
         return value >= 10;
       });
 
-      const result = await monad.run();
+      const result = await monad.yield();
       expect(result.isSuccess()).toBe(true);
     });
 
@@ -637,7 +637,7 @@ const advancedMonadTests = () => {
         },
         () => "Predicate Failed",
       );
-      const result = await monad.run();
+      const result = await monad.yield();
       expect(result.isSuccess()).toBe(false);
       if (!result.isSuccess()) {
         expect(result.error).toBe("Predicate Failed");
@@ -653,14 +653,14 @@ const advancedMonadTests = () => {
         expect(value).toBe("Hello");
       });
 
-      await monad.run();
+      await monad.yield();
       expect(tapCalled).toBe(true);
     });
 
     it("does not change the monad state", async () => {
       const monad = Monad.of<number>(42).tap((value) => value * 2);
 
-      const result = await monad.run();
+      const result = await monad.yield();
       expect(result.isSuccess()).toBe(true);
       if (result.isSuccess()) {
         expect(result.value).toBe(42); // Not 84, proving that monad state is immutable
@@ -673,7 +673,7 @@ const advancedMonadTests = () => {
         tapCalled = true;
       });
 
-      const result = await monad.run();
+      const result = await monad.yield();
       expect(result.isSuccess()).toBe(false);
       expect(tapCalled).toBe(false);
     });
@@ -687,7 +687,7 @@ const advancedMonadTests = () => {
           expect(value).toBe("Hello");
         });
 
-        await monad.run();
+        await monad.yield();
         expect(tapCalled).toBe(true); // This should now pass
       });
 
@@ -701,7 +701,7 @@ const advancedMonadTests = () => {
           }
         });
 
-        const result = await monad.run();
+        const result = await monad.yield();
         expect(result.isSuccess()).toBe(true);
         if (result.isSuccess()) {
           expect(result.value).toBe(42);
@@ -736,7 +736,7 @@ const advancedMonadTests = () => {
       const promise = Promise.resolve(42);
       const monad = Monad.fromPromise(promise);
 
-      const result = await monad.run();
+      const result = await monad.yield();
       expect(result.isSuccess()).toBe(true);
       if (result.isSuccess()) {
         expect(result.value).toBe(42);
@@ -747,7 +747,7 @@ const advancedMonadTests = () => {
       const promise = Promise.reject(new Error("Promise Error"));
       const monad = Monad.fromPromise(promise);
 
-      const result = await monad.run();
+      const result = await monad.yield();
       expect(result.isSuccess()).toBe(false);
       if (!result.isSuccess()) {
         expect(result.error.message).toBe("Promise Error");
@@ -758,7 +758,7 @@ const advancedMonadTests = () => {
       const promise = Promise.resolve(42);
       const monad = Monad.fromPromise(promise).map((value) => value * 2);
 
-      const result = await monad.run();
+      const result = await monad.yield();
       expect(result.isSuccess()).toBe(true);
       if (result.isSuccess()) {
         expect(result.value).toBe(84);
@@ -769,7 +769,7 @@ const advancedMonadTests = () => {
       const promise = Promise.reject(new Error("Promise Error"));
       const monad = Monad.fromPromise(promise).map((value) => value * 2);
 
-      const result = await monad.run();
+      const result = await monad.yield();
       expect(result.isSuccess()).toBe(false);
       if (!result.isSuccess()) {
         expect(result.error.message).toBe("Promise Error");
@@ -796,7 +796,7 @@ const advancedMonadTests = () => {
         times: 5,
         delay: 10,
         onError: (error, attempt) => {},
-      }).run();
+      }).yield();
 
       expect(result.isSuccess()).toBe(true);
       if (result.isSuccess()) {
@@ -831,7 +831,7 @@ const advancedMonadTests = () => {
         times: 5,
         delay: 10,
         backoffFactor: 2,
-      }).run();
+      }).yield();
 
       expect(result.isSuccess()).toBe(true);
       if (result.isSuccess()) {
@@ -851,7 +851,7 @@ const advancedMonadTests = () => {
       const result = await Monad.retry(operationFn, {
         times: 3,
         delay: 10,
-      }).run();
+      }).yield();
 
       expect(result.isSuccess()).toBe(false);
       if (!result.isSuccess()) {
@@ -875,7 +875,7 @@ const advancedMonadTests = () => {
           errorCounter += 1;
           expect(error).toBe("Failed");
         },
-      }).run();
+      }).yield();
 
       expect(result.isSuccess()).toBe(false);
       expect(errorCounter).toBe(5);
@@ -885,7 +885,7 @@ const advancedMonadTests = () => {
   describe("TimeOut function", () => {
     it("completes successfully before timeout", async () => {
       const operation = (signal?: AbortSignal) => Monad.of<number>(42);
-      const result = await Monad.timeout(operation, 50, new Error("Operation timed out")).run();
+      const result = await Monad.timeout(operation, 50, new Error("Operation timed out")).yield();
       expect(result.isSuccess()).toBe(true);
       if (result.isSuccess()) {
         expect(result.value).toBe(42);
@@ -895,7 +895,7 @@ const advancedMonadTests = () => {
     it("fails due to timeout", async () => {
       const operation = (signal?: AbortSignal) =>
         new Monad<number>(new Promise((resolve) => setTimeout(() => resolve(new Success(42)), 100)));
-      const result = await Monad.timeout(operation, 50, new Error("Operation timed out")).run();
+      const result = await Monad.timeout(operation, 50, new Error("Operation timed out")).yield();
       expect(result.isSuccess()).toBe(false);
       if (!result.isSuccess()) {
         expect(result.error.message).toBe("Operation timed out");
@@ -915,7 +915,7 @@ const advancedMonadTests = () => {
             }
           }),
         );
-      const result = await Monad.timeout(operation, 50, new Error("Operation timed out")).run();
+      const result = await Monad.timeout(operation, 50, new Error("Operation timed out")).yield();
       expect(result.isSuccess()).toBe(false);
       if (!result.isSuccess()) {
         expect(result.error.message).toBe("Operation timed out");
@@ -936,7 +936,7 @@ const advancedMonadTests = () => {
             }
           }),
         );
-      const result = await Monad.timeout(operation, 50, new Error("Operation timed out")).run();
+      const result = await Monad.timeout(operation, 50, new Error("Operation timed out")).yield();
       expect(result.isSuccess()).toBe(false);
 
       if (!result.isSuccess()) {
@@ -985,7 +985,7 @@ const advancedMonadTests = () => {
       const monad = Monad.of(5);
       const alternativeMonad = monad.orElse(Monad.of(10));
 
-      const result = await alternativeMonad.run();
+      const result = await alternativeMonad.yield();
       expect(result.isSuccess()).toBe(true);
       if (result.isSuccess()) {
         expect(result.value).toBe(5);
@@ -996,7 +996,7 @@ const advancedMonadTests = () => {
       const monad = Monad.fail<number, Error>(new Error("Original Error"));
       const alternativeMonad = monad.orElse(Monad.of(10));
 
-      const result = await alternativeMonad.run();
+      const result = await alternativeMonad.yield();
       expect(result.isSuccess()).toBe(true);
       if (result.isSuccess()) {
         expect(result.value).toBe(10);
@@ -1010,7 +1010,7 @@ const advancedMonadTests = () => {
         return Monad.of(15);
       });
 
-      const result = await alternativeMonad.run();
+      const result = await alternativeMonad.yield();
       expect(result.isSuccess()).toBe(true);
       if (result.isSuccess()) {
         expect(result.value).toBe(15);
@@ -1021,7 +1021,7 @@ const advancedMonadTests = () => {
       const monad = Monad.fail<number, Error>(new Error("Original Error"));
       const alternativeMonad = monad.orElse(Monad.fail(new Error("Alternative Error")));
 
-      const result = await alternativeMonad.run();
+      const result = await alternativeMonad.yield();
       expect(result.isSuccess()).toBe(false);
       if (!result.isSuccess()) {
         expect(result.error.message).toBe("Alternative Error");
@@ -1033,7 +1033,7 @@ const advancedMonadTests = () => {
     it("should log the value if the monad is successful with default transformer", async () => {
       const logger = { log: jest.fn() };
       const monad = Monad.of(5).log(logger); // Not passing transformer
-      await monad.run();
+      await monad.yield();
       expect(logger.log).toHaveBeenCalledWith("Success: 5");
     });
     it("should use a custom logger to log the value", async () => {
@@ -1043,7 +1043,7 @@ const advancedMonadTests = () => {
 
       const monad = Monad.of(10).log(customLogger);
 
-      await monad.run();
+      await monad.yield();
       expect(customLogger.log).toHaveBeenCalledWith("Success: 10");
     });
     it("should apply a custom transformer to the log message", async () => {
@@ -1053,7 +1053,7 @@ const advancedMonadTests = () => {
 
       const monad = Monad.of(15).log(logger, transformer);
 
-      await monad.run();
+      await monad.yield();
       expect(logger.log).toHaveBeenCalledWith("Value is: 15");
     });
     it("should log the error if the monad is a failure", async () => {
@@ -1061,7 +1061,7 @@ const advancedMonadTests = () => {
 
       const monad = Monad.fail<number, Error>(new Error("Something went wrong")).log(logger);
 
-      await monad.run();
+      await monad.yield();
       expect(logger.log).toHaveBeenCalledWith("Error: Error: Something went wrong");
     });
     it("should apply a custom transformer to the error log message", async () => {
@@ -1071,7 +1071,7 @@ const advancedMonadTests = () => {
 
       const monad = Monad.fail<number, Error>(new Error("Bad data")).log(logger, transformer);
 
-      await monad.run();
+      await monad.yield();
       expect(logger.log).toHaveBeenCalledWith("Error occurred: Bad data");
     });
   });
@@ -1132,7 +1132,7 @@ const advancedMonadTests = () => {
       const operation = Monad.fail(new BadRequestError("Bad Request"));
       const handler = jest.fn((error) => Monad.of(error.message));
 
-      const result = await operation.handleSpecificErrors([BadRequestError, GatewayError], handler).run();
+      const result = await operation.handleSpecificErrors([BadRequestError, GatewayError], handler).yield();
 
       expect(handler).toHaveBeenCalled();
       expect(result.isSuccess()).toBe(true);
@@ -1145,7 +1145,7 @@ const advancedMonadTests = () => {
       const operation = Monad.fail(new OtherError("Other Error"));
       const handler = jest.fn((error) => Monad.of(error.message));
 
-      await operation.handleSpecificErrors([BadRequestError, GatewayError], handler).run();
+      await operation.handleSpecificErrors([BadRequestError, GatewayError], handler).yield();
       expect(handler).not.toHaveBeenCalled();
     });
 
@@ -1155,7 +1155,7 @@ const advancedMonadTests = () => {
   
       const result = await operation
           .handleHttpErrors([400, 404], handler)
-          .run();
+          .yield();
   
       expect(handler).toHaveBeenCalled();
       expect(result.isSuccess()).toBe(true);
@@ -1170,7 +1170,7 @@ const advancedMonadTests = () => {
   
       await operation
           .handleHttpErrors([400, 404], handler)
-          .run();
+          .yield();
   
       expect(handler).not.toHaveBeenCalled();
   });

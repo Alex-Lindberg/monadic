@@ -1,8 +1,8 @@
-import { Either, MatchCondition, MatchOptions, NamedMonad, RetryOptions, FoldResult } from "./util";
+import { Either, MatchCondition, MatchOptions, NamedMonad, RetryOptions, FoldResult, ErrorType, HttpError } from "./util";
 export declare class Monad<T, E = Error> {
     private value;
     constructor(value: Promise<Either<T, E>>);
-    static of<T>(value: T): Monad<T>;
+    static of<T, E = Error>(value: T, error?: E): Monad<T, E>;
     static fromPromise<T, E = Error>(promise: Promise<T>): Monad<T, E>;
     static fail<T, E>(error: E): Monad<T, E>;
     toPromise(): Promise<T>;
@@ -24,6 +24,8 @@ export declare class Monad<T, E = Error> {
     tap(fn: (value: T) => T | void | Promise<void>): Monad<T, E>;
     fold<U>(onSuccess: (value: T) => U, onFailure: (error: E) => U): Promise<FoldResult<U>>;
     log<L = Console>(logger?: L, transformer?: (either: Either<T, E>) => any): Monad<T, E>;
-    run(): Promise<Either<T, E>>;
+    handleSpecificErrors(errorTypes: ErrorType[], handler: (error: E) => Monad<T, E>): Monad<T, E>;
+    handleHttpErrors(statusCodes: number[], handler: (error: HttpError) => Monad<T, E>): Monad<T, E>;
+    yield(): Promise<Either<T, E>>;
 }
 //# sourceMappingURL=monad.d.ts.map

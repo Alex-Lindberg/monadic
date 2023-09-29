@@ -18,11 +18,10 @@ export class Monad<T, E = Error> {
   // ---- Static methods ----
   static of<T, E = Error>(value: T, error?: E): Monad<T, E> {
     if (error) {
-        return new Monad(Promise.resolve(new Failure(error)));
+      return new Monad(Promise.resolve(new Failure(error)));
     }
     return new Monad(Promise.resolve(new Success(value)));
-}
-
+  }
 
   static fromPromise<T, E = Error>(promise: Promise<T>): Monad<T, E> {
     return new Monad<T, E>(
@@ -47,7 +46,7 @@ export class Monad<T, E = Error> {
   static zip<T extends any[], E = Error>(...monads: any[]): Monad<{ [key: string]: T[number] }, E> {
     const monadArray = Array.isArray(monads[0]) ? [...monads[0]] : monads;
     return new Monad(
-      Promise.all(monadArray.map((m: NamedMonad<T[number], E>) => m.monad.run())).then((results) => {
+      Promise.all(monadArray.map((m: NamedMonad<T[number], E>) => m.monad.yield())).then((results) => {
         let error: E | null = null;
         const combinedValue = results.reduce(
           (acc, result, i) => {
@@ -70,7 +69,7 @@ export class Monad<T, E = Error> {
     const { times = 1, delay = 1000, backoffFactor = 1, onError } = options;
     const retryOperation = async (retriesLeft: number, currentDelay: number): Promise<Either<T, E>> => {
       const operation = operationFn();
-      const result = await operation.run();
+      const result = await operation.yield();
       if (result.isSuccess() || retriesLeft <= 0) return result;
       if (onError && result.error) onError(result.error, times - retriesLeft);
       // Artificially delay the retry
@@ -98,7 +97,7 @@ export class Monad<T, E = Error> {
           resolve(new Failure(timeoutError));
         }, duration);
         operation(abortController.signal)
-          .run()
+          .yield()
           .then((result) => {
             if (result.isSuccess()) {
               clearTimeout(timer);
@@ -125,7 +124,7 @@ export class Monad<T, E = Error> {
     transformer?: (duration: number, result: Either<T, E>) => string,
   ): Promise<Either<T, E>> {
     const startTime = performance.now();
-    const result = await operation().run();
+    const result = await operation().yield();
     const endTime = performance.now();
     const duration = endTime - startTime;
 
@@ -163,7 +162,7 @@ export class Monad<T, E = Error> {
               .catch((error) => new Failure(error instanceof Error ? error.message : error) as Either<U, E>)
               .then((value) => {
                 if (value instanceof Monad) {
-                  return value.run().then((innerEither) => innerEither as Either<U, E>);
+                  return value.yield().then((innerEither) => innerEither as Either<U, E>);
                 } else if (value instanceof Promise) {
                   return value
                     .then((result) => new Success(result) as Either<U, E>)
@@ -190,7 +189,7 @@ export class Monad<T, E = Error> {
       this.value.then((either) =>
         either.isSuccess()
           ? either
-          : (typeof alternative === "function" ? alternative(either.error) : alternative).run(),
+          : (typeof alternative === "function" ? alternative(either.error) : alternative).yield(),
       ),
     );
   }
@@ -264,7 +263,7 @@ export class Monad<T, E = Error> {
 
   async fold<U>(onSuccess: (value: T) => U, onFailure: (error: E) => U): Promise<FoldResult<U>> {
     try {
-      const either = await this.run();
+      const either = await this.yield();
       const result = either.isSuccess() ? onSuccess(either.value) : onFailure(either.error);
       return { result };
     } catch (error) {
@@ -294,7 +293,7 @@ export class Monad<T, E = Error> {
     return new Monad(
       this.value.then((either) =>
         !either.isSuccess() && errorTypes.some((type) => either.error instanceof type)
-          ? handler(either.error).run()
+          ? handler(either.error).yield()
           : either,
       ),
     );
@@ -304,13 +303,13 @@ export class Monad<T, E = Error> {
     return new Monad(
       this.value.then((either) =>
         !either.isSuccess() && either.error instanceof HttpError && statusCodes.includes(either.error.statusCode)
-          ? handler(either.error).run()
+          ? handler(either.error).yield()
           : either,
       ),
     );
   }
 
-  run(): Promise<Either<T, E>> {
+  yield(): Promise<Either<T, E>> {
     return this.value;
   }
 }

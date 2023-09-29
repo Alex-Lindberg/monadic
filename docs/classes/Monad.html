@@ -27,7 +27,7 @@
 <ul class="tsd-hierarchy">
 <li><span class="target">Monad</span></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/47b23d0/src/monad.ts#L13">monad.ts:13</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/2930d5d/src/monad.ts#L15">monad.ts:15</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -46,14 +46,16 @@
 <div class="tsd-index-list"><a href="Monad.html#filter" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>filter</span></a>
 <a href="Monad.html#flatMap" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>flat<wbr/>Map</span></a>
 <a href="Monad.html#fold" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>fold</span></a>
+<a href="Monad.html#handleHttpErrors" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>handle<wbr/>Http<wbr/>Errors</span></a>
+<a href="Monad.html#handleSpecificErrors" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>handle<wbr/>Specific<wbr/>Errors</span></a>
 <a href="Monad.html#log" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>log</span></a>
 <a href="Monad.html#map" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>map</span></a>
 <a href="Monad.html#match" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>match</span></a>
 <a href="Monad.html#orElse" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>or<wbr/>Else</span></a>
 <a href="Monad.html#recover" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>recover</span></a>
-<a href="Monad.html#run" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>run</span></a>
 <a href="Monad.html#tap" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>tap</span></a>
 <a href="Monad.html#toPromise" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>to<wbr/>Promise</span></a>
+<a href="Monad.html#yield" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>yield</span></a>
 <a href="Monad.html#fail" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>fail</span></a>
 <a href="Monad.html#fromPromise" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>from<wbr/>Promise</span></a>
 <a href="Monad.html#of" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>of</span></a>
@@ -83,14 +85,14 @@
 <h5><span class="tsd-kind-parameter">value</span>: <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../types/Either.html" class="tsd-signature-type tsd-kind-type-alias">Either</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/47b23d0/src/monad.ts#L14">monad.ts:14</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/2930d5d/src/monad.ts#L16">monad.ts:16</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-is-private"><a id="value" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>value</span><a href="#value" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">value</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../types/Either.html" class="tsd-signature-type tsd-kind-type-alias">Either</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/47b23d0/src/monad.ts#L14">monad.ts:14</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/2930d5d/src/monad.ts#L16">monad.ts:16</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member"><a id="filter" class="tsd-anchor"></a>
@@ -134,7 +136,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type tsd-kind-type-parameter">E2</span></h4></li></ul></li></ul></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type tsd-kind-type-parameter">E2</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/47b23d0/src/monad.ts#L230">monad.ts:230</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/2930d5d/src/monad.ts#L235">monad.ts:235</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="flatMap" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>flat<wbr/>Map</span><a href="#flatMap" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -163,7 +165,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type tsd-kind-type-parameter">U</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">U</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">U</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span></h4></li></ul></li></ul></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">U</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/47b23d0/src/monad.ts#L151">monad.ts:151</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/2930d5d/src/monad.ts#L156">monad.ts:156</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="fold" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>fold</span><a href="#fold" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -205,7 +207,59 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type tsd-kind-type-parameter">U</span></h4></li></ul></li></ul></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../types/FoldResult.html" class="tsd-signature-type tsd-kind-type-alias">FoldResult</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">U</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/47b23d0/src/monad.ts#L259">monad.ts:259</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/2930d5d/src/monad.ts#L264">monad.ts:264</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="handleHttpErrors" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>handle<wbr/>Http<wbr/>Errors</span><a href="#handleHttpErrors" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="tsd-signature tsd-anchor-link" id="handleHttpErrors.handleHttpErrors-1"><span class="tsd-kind-call-signature">handle<wbr/>Http<wbr/>Errors</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">statusCodes</span>, <span class="tsd-kind-parameter">handler</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span><a href="#handleHttpErrors.handleHttpErrors-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><span class="tsd-kind-parameter">statusCodes</span>: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h5></li>
+<li>
+<h5><span class="tsd-kind-parameter">handler</span>: <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">error</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span></h5>
+<ul class="tsd-parameters">
+<li class="tsd-parameter-signature">
+<ul class="tsd-signatures">
+<li class="tsd-signature"><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">error</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span></li>
+<li class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><span class="tsd-kind-parameter">error</span>: <a href="HttpError.html" class="tsd-signature-type tsd-kind-class">HttpError</a></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span></h4></li></ul></li></ul></li></ul></div>
+<h4 class="tsd-returns-title">Returns <a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/2930d5d/src/monad.ts#L302">monad.ts:302</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="handleSpecificErrors" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>handle<wbr/>Specific<wbr/>Errors</span><a href="#handleSpecificErrors" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="tsd-signature tsd-anchor-link" id="handleSpecificErrors.handleSpecificErrors-1"><span class="tsd-kind-call-signature">handle<wbr/>Specific<wbr/>Errors</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">errorTypes</span>, <span class="tsd-kind-parameter">handler</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span><a href="#handleSpecificErrors.handleSpecificErrors-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><span class="tsd-kind-parameter">errorTypes</span>: <a href="../types/ErrorType.html" class="tsd-signature-type tsd-kind-type-alias">ErrorType</a><span class="tsd-signature-symbol">[]</span></h5></li>
+<li>
+<h5><span class="tsd-kind-parameter">handler</span>: <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">error</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span></h5>
+<ul class="tsd-parameters">
+<li class="tsd-parameter-signature">
+<ul class="tsd-signatures">
+<li class="tsd-signature"><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">error</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span></li>
+<li class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><span class="tsd-kind-parameter">error</span>: <span class="tsd-signature-type tsd-kind-type-parameter">E</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span></h4></li></ul></li></ul></li></ul></div>
+<h4 class="tsd-returns-title">Returns <a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/2930d5d/src/monad.ts#L292">monad.ts:292</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="log" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>log</span><a href="#log" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -236,7 +290,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4></li></ul></li></ul></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/47b23d0/src/monad.ts#L269">monad.ts:269</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/2930d5d/src/monad.ts#L274">monad.ts:274</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="map" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>map</span><a href="#map" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -265,7 +319,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type tsd-kind-type-parameter">U</span></h4></li></ul></li></ul></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">U</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/47b23d0/src/monad.ts#L138">monad.ts:138</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/2930d5d/src/monad.ts#L143">monad.ts:143</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="match" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>match</span><a href="#match" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -280,7 +334,7 @@
 <h5><span class="tsd-kind-parameter">options</span>: <a href="../types/MatchOptions.html" class="tsd-signature-type tsd-kind-type-alias">MatchOptions</a><span class="tsd-signature-symbol"> = ...</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/47b23d0/src/monad.ts#L192">monad.ts:192</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/2930d5d/src/monad.ts#L197">monad.ts:197</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="orElse" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>or<wbr/>Else</span><a href="#orElse" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -293,7 +347,7 @@
 <h5><span class="tsd-kind-parameter">alternative</span>: <a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">error</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/47b23d0/src/monad.ts#L182">monad.ts:182</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/2930d5d/src/monad.ts#L187">monad.ts:187</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="recover" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>recover</span><a href="#recover" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -317,15 +371,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type tsd-kind-type-parameter">T</span></h4></li></ul></li></ul></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/47b23d0/src/monad.ts#L176">monad.ts:176</a></li></ul></aside></li></ul></section>
-<section class="tsd-panel tsd-member"><a id="run" class="tsd-anchor"></a>
-<h3 class="tsd-anchor-link"><span>run</span><a href="#run" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<ul class="tsd-signatures">
-<li class="tsd-signature tsd-anchor-link" id="run.run-1"><span class="tsd-kind-call-signature">run</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../types/Either.html" class="tsd-signature-type tsd-kind-type-alias">Either</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><a href="#run.run-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
-<li class="tsd-description">
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../types/Either.html" class="tsd-signature-type tsd-kind-type-alias">Either</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
-<ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/47b23d0/src/monad.ts#L287">monad.ts:287</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/2930d5d/src/monad.ts#L181">monad.ts:181</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="tap" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>tap</span><a href="#tap" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -349,7 +395,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type tsd-kind-type-parameter">T</span></h4></li></ul></li></ul></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/47b23d0/src/monad.ts#L248">monad.ts:248</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/2930d5d/src/monad.ts#L253">monad.ts:253</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="toPromise" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>to<wbr/>Promise</span><a href="#toPromise" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -357,7 +403,15 @@
 <li class="tsd-description">
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/47b23d0/src/monad.ts#L33">monad.ts:33</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/2930d5d/src/monad.ts#L38">monad.ts:38</a></li></ul></aside></li></ul></section>
+<section class="tsd-panel tsd-member"><a id="yield" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>yield</span><a href="#yield" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="tsd-signature tsd-anchor-link" id="yield.yield-1"><span class="tsd-kind-call-signature">yield</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../types/Either.html" class="tsd-signature-type tsd-kind-type-alias">Either</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><a href="#yield.yield-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-description">
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../types/Either.html" class="tsd-signature-type tsd-kind-type-alias">Either</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/2930d5d/src/monad.ts#L312">monad.ts:312</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="fail" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>fail</span><a href="#fail" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -377,7 +431,7 @@
 <h5><span class="tsd-kind-parameter">error</span>: <span class="tsd-signature-type tsd-kind-type-parameter">E</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/47b23d0/src/monad.ts#L29">monad.ts:29</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/2930d5d/src/monad.ts#L34">monad.ts:34</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="fromPromise" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>from<wbr/>Promise</span><a href="#fromPromise" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -397,25 +451,29 @@
 <h5><span class="tsd-kind-parameter">promise</span>: <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">&gt;</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/47b23d0/src/monad.ts#L21">monad.ts:21</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/2930d5d/src/monad.ts#L26">monad.ts:26</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="of" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>of</span><a href="#of" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
-<li class="tsd-signature tsd-anchor-link" id="of.of-1"><span class="tsd-kind-call-signature">of</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">value</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type ">Error</span><span class="tsd-signature-symbol">&gt;</span><a href="#of.of-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="of.of-1"><span class="tsd-kind-call-signature">of</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">value</span>, <span class="tsd-kind-parameter">error</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span><a href="#of.of-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
 <section class="tsd-panel">
 <h4>Type Parameters</h4>
 <ul class="tsd-type-parameter-list">
 <li>
-<h4><span class="tsd-kind-type-parameter">T</span></h4></li></ul></section>
+<h4><span class="tsd-kind-type-parameter">T</span></h4></li>
+<li>
+<h4><span class="tsd-kind-type-parameter">E</span> = <span class="tsd-signature-type ">Error</span></h4></li></ul></section>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li>
-<h5><span class="tsd-kind-parameter">value</span>: <span class="tsd-signature-type tsd-kind-type-parameter">T</span></h5></li></ul></div>
-<h4 class="tsd-returns-title">Returns <a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type ">Error</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
+<h5><span class="tsd-kind-parameter">value</span>: <span class="tsd-signature-type tsd-kind-type-parameter">T</span></h5></li>
+<li>
+<h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-parameter">error</span>: <span class="tsd-signature-type tsd-kind-type-parameter">E</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/47b23d0/src/monad.ts#L17">monad.ts:17</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/2930d5d/src/monad.ts#L19">monad.ts:19</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="retry" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>retry</span><a href="#retry" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -443,7 +501,7 @@
 <h5><span class="tsd-kind-parameter">options</span>: <a href="../types/RetryOptions.html" class="tsd-signature-type tsd-kind-type-alias">RetryOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/47b23d0/src/monad.ts#L63">monad.ts:63</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/2930d5d/src/monad.ts#L68">monad.ts:68</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="timeExecution" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>time<wbr/>Execution</span><a href="#timeExecution" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -488,7 +546,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4></li></ul></li></ul></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../types/Either.html" class="tsd-signature-type tsd-kind-type-alias">Either</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/47b23d0/src/monad.ts#L116">monad.ts:116</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/2930d5d/src/monad.ts#L121">monad.ts:121</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="timeout" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>timeout</span><a href="#timeout" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -523,7 +581,7 @@
 <h5><span class="tsd-kind-parameter">timeoutError</span>: <span class="tsd-signature-type tsd-kind-type-parameter">E</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/47b23d0/src/monad.ts#L78">monad.ts:78</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/2930d5d/src/monad.ts#L83">monad.ts:83</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="zip" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagStatic">Static</code> <span>zip</span><a href="#zip" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -543,7 +601,7 @@
 <h5><span class="tsd-kind-parameter">monads</span>: <a href="../types/NamedMonad.html" class="tsd-signature-type tsd-kind-type-alias">NamedMonad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>[<span class="tsd-kind-index-signature">key</span>: <span class="tsd-signature-type">string</span>]<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/47b23d0/src/monad.ts#L39">monad.ts:39</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/2930d5d/src/monad.ts#L44">monad.ts:44</a></li></ul></aside></li>
 <li class="tsd-signature tsd-anchor-link" id="zip.zip-2"><span class="tsd-kind-call-signature">zip</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span><span class="tsd-kind-parameter">monads</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>[<span class="tsd-kind-index-signature">key</span>: <span class="tsd-signature-type">string</span>]<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span><a href="#zip.zip-2" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
 <section class="tsd-panel">
@@ -560,7 +618,7 @@
 <h5><code class="tsd-tag ts-flagRest">Rest</code> <span class="tsd-signature-symbol">...</span><span class="tsd-kind-parameter">monads</span>: <a href="../types/NamedMonad.html" class="tsd-signature-type tsd-kind-type-alias">NamedMonad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span><br/><span>    </span>[<span class="tsd-kind-index-signature">key</span>: <span class="tsd-signature-type">string</span>]<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/47b23d0/src/monad.ts#L40">monad.ts:40</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/2930d5d/src/monad.ts#L45">monad.ts:45</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -585,14 +643,16 @@
 <li><a href="#filter" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>filter</span></a></li>
 <li><a href="#flatMap" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>flat<wbr/>Map</span></a></li>
 <li><a href="#fold" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>fold</span></a></li>
+<li><a href="#handleHttpErrors" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>handle<wbr/>Http<wbr/>Errors</span></a></li>
+<li><a href="#handleSpecificErrors" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>handle<wbr/>Specific<wbr/>Errors</span></a></li>
 <li><a href="#log" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>log</span></a></li>
 <li><a href="#map" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>map</span></a></li>
 <li><a href="#match" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>match</span></a></li>
 <li><a href="#orElse" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>or<wbr/>Else</span></a></li>
 <li><a href="#recover" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>recover</span></a></li>
-<li><a href="#run" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>run</span></a></li>
 <li><a href="#tap" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>tap</span></a></li>
 <li><a href="#toPromise" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>to<wbr/>Promise</span></a></li>
+<li><a href="#yield" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>yield</span></a></li>
 <li><a href="#fail" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>fail</span></a></li>
 <li><a href="#fromPromise" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>from<wbr/>Promise</span></a></li>
 <li><a href="#of" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>of</span></a></li>
@@ -605,9 +665,11 @@
 <ul class="tsd-small-nested-navigation" id="tsd-nav-container" data-base="..">
 <li><a href="../enums/MatchMode.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8"></use></svg>MatchMode</a></li>
 <li><a href="Failure.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>Failure</a></li>
+<li><a href="HttpError.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>HttpError</a></li>
 <li><a href="Monad.html" class="current"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>Monad</a></li>
 <li><a href="Success.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>Success</a></li>
 <li><a href="../types/Either.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>Either</a></li>
+<li><a href="../types/ErrorType.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>ErrorType</a></li>
 <li><a href="../types/FoldResult.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>FoldResult</a></li>
 <li><a href="../types/MatchCondition.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>MatchCondition</a></li>
 <li><a href="../types/MatchOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>MatchOptions</a></li>

@@ -37,5 +37,10 @@ type FoldResult<U> = {
     result?: U;
     error?: Error;
 };
-export { Either, Success, Failure, MatchCondition, MatchMode, MatchOptions, NamedMonad, RetryOptions, FoldResult };
+type ErrorType = new (...args: any[]) => Error;
+declare class HttpError extends Error {
+    statusCode: number;
+    constructor(statusCode: number, message: string);
+}
+export { Either, Success, Failure, MatchCondition, MatchMode, MatchOptions, NamedMonad, RetryOptions, FoldResult, ErrorType, HttpError, };
 //# sourceMappingURL=util.d.ts.map
