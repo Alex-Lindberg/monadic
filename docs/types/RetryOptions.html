@@ -16,11 +16,16 @@
 <li><a href="RetryOptions.html">RetryOptions</a></li></ul>
 <h1>Type alias RetryOptions&lt;E&gt;</h1></div>
 <div class="tsd-signature"><span class="tsd-kind-type-alias">Retry<wbr/>Options</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span><br/><span>    </span><span class="tsd-kind-property">backoffFactor</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">delay</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">onError</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">error</span>, <span class="tsd-kind-parameter">attempt</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">times</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span></div>
+<div class="tsd-comment tsd-typography"><p>A type representing retry options</p>
+</div>
 <section class="tsd-panel">
 <h4>Type Parameters</h4>
 <ul class="tsd-type-parameter-list">
 <li>
-<h4><span class="tsd-kind-type-parameter">E</span></h4></li></ul></section>
+<h4><span class="tsd-kind-type-parameter">E</span></h4>
+<div class="tsd-comment tsd-typography"><p>The type of the error</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li></ul></section>
 <div class="tsd-type-declaration">
 <h4>Type declaration</h4>
 <ul class="tsd-parameters">
@@ -44,9 +49,18 @@
 <h5><span class="tsd-kind-parameter">attempt</span>: <span class="tsd-signature-type">number</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4></li></ul></li></ul></li>
 <li class="tsd-parameter">
-<h5><span class="tsd-kind-property">times</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5></li></ul></div><aside class="tsd-sources">
+<h5><span class="tsd-kind-property">times</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h5></li></ul></div>
+<div class="tsd-comment tsd-typography">
+<h4>Param</h4><p>the number of times to retry</p>
+
+<h4>Param</h4><p>the delay between retries</p>
+
+<h4>Param</h4><p>the backoff factor</p>
+
+<h4>Param</h4><p>the error handler</p>
+</div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/2930d5d/src/util.ts#L40">util.ts:40</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/c48a333/src/util.ts#L104">util.ts:104</a></li></ul></aside></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
