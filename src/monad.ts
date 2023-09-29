@@ -7,7 +7,6 @@ import {
   MatchMode,
   NamedMonad,
   RetryOptions,
-  Cancelable,
   FoldResult,
 } from "./util";
 
@@ -23,7 +22,7 @@ export class Monad<T, E = Error> {
     return new Monad<T, E>(
       promise
         .then((value) => new Success(value) as Either<T, E>)
-        .catch((error) => new Failure(error as E) as Either<T, E>)
+        .catch((error) => new Failure(error as E) as Either<T, E>),
     );
   }
 
@@ -33,50 +32,37 @@ export class Monad<T, E = Error> {
 
   async toPromise(): Promise<T> {
     return this.value.then((either) =>
-      either.isSuccess()
-        ? Promise.resolve(either.value)
-        : Promise.reject(either.error)
+      either.isSuccess() ? Promise.resolve(either.value) : Promise.reject(either.error),
     );
   }
 
-  static zip<T extends any[], E = Error>(
-    monads: NamedMonad<T[number], E>[]
-  ): Monad<{ [key: string]: T[number] }, E>;
-  static zip<T extends any[], E = Error>(
-    ...monads: NamedMonad<T[number], E>[]
-  ): Monad<{ [key: string]: T[number] }, E>;
-  static zip<T extends any[], E = Error>(
-    ...monads: any[]
-  ): Monad<{ [key: string]: T[number] }, E> {
+  static zip<T extends any[], E = Error>(monads: NamedMonad<T[number], E>[]): Monad<{ [key: string]: T[number] }, E>;
+  static zip<T extends any[], E = Error>(...monads: NamedMonad<T[number], E>[]): Monad<{ [key: string]: T[number] }, E>;
+  static zip<T extends any[], E = Error>(...monads: any[]): Monad<{ [key: string]: T[number] }, E> {
     const monadArray = Array.isArray(monads[0]) ? [...monads[0]] : monads;
     return new Monad(
-      Promise.all(
-        monadArray.map((m: NamedMonad<T[number], E>) => m.monad.run())
-      ).then((results) => {
+      Promise.all(monadArray.map((m: NamedMonad<T[number], E>) => m.monad.run())).then((results) => {
         let error: E | null = null;
-        const combinedValue = results.reduce((acc, result, i) => {
-          const key = monadArray[i].name || `m${i}`;
-          if (result.isSuccess()) acc[key] = result.value;
-          else if (error === null) error = result.error;
-          return acc;
-        }, {} as { [key: string]: T[number] });
+        const combinedValue = results.reduce(
+          (acc, result, i) => {
+            const key = monadArray[i].name || `m${i}`;
+            if (result.isSuccess()) acc[key] = result.value;
+            else if (error === null) error = result.error;
+            return acc;
+          },
+          {} as { [key: string]: T[number] },
+        );
         if (error) {
           return new Failure(error);
         }
         return new Success(combinedValue);
-      })
+      }),
     );
   }
 
-  static retry<T, E = Error>(
-    operationFn: () => Monad<T, E>,
-    options: RetryOptions<E>
-  ): Monad<T, E> {
+  static retry<T, E = Error>(operationFn: () => Monad<T, E>, options: RetryOptions<E>): Monad<T, E> {
     const { times = 1, delay = 1000, backoffFactor = 1, onError } = options;
-    const retryOperation = async (
-      retriesLeft: number,
-      currentDelay: number
-    ): Promise<Either<T, E>> => {
+    const retryOperation = async (retriesLeft: number, currentDelay: number): Promise<Either<T, E>> => {
       const operation = operationFn();
       const result = await operation.run();
       if (result.isSuccess() || retriesLeft <= 0) return result;
@@ -92,7 +78,7 @@ export class Monad<T, E = Error> {
   static timeout<T, E = Error>(
     operation: (abortSignal?: AbortSignal) => Monad<T, E>,
     duration: number,
-    timeoutError: E
+    timeoutError: E,
   ): Monad<T, E> {
     return new Monad<T, E>(
       new Promise<Either<T, E>>((resolve) => {
@@ -111,10 +97,7 @@ export class Monad<T, E = Error> {
             if (result.isSuccess()) {
               clearTimeout(timer);
               resolve(result);
-            } else if (
-              result.error instanceof DOMException &&
-              result.error.name === "AbortError"
-            ) {
+            } else if (result.error instanceof DOMException && result.error.name === "AbortError") {
               isAbortSupported = false;
               // Let the timeout handler take care of this
             } else {
@@ -126,14 +109,14 @@ export class Monad<T, E = Error> {
             clearTimeout(timer);
             resolve(new Failure(error));
           });
-      })
+      }),
     );
   }
 
   static async timeExecution<T, E = Error, L = Console>(
     operation: () => Monad<T, E>,
     logger: L,
-    transformer?: (duration: number, result: Either<T, E>) => string
+    transformer?: (duration: number, result: Either<T, E>) => string,
   ): Promise<Either<T, E>> {
     const startTime = performance.now();
     const result = await operation().run();
@@ -146,8 +129,7 @@ export class Monad<T, E = Error> {
     } else if (!result.isSuccess()) {
       message += ` - Error: ${result.error}`; // Include error information in the log message
     }
-    if (logger && typeof (logger as any).log === "function")
-      (logger as any).log(message);
+    if (logger && typeof (logger as any).log === "function") (logger as any).log(message);
     else console.log(message);
     return result;
   }
@@ -160,14 +142,9 @@ export class Monad<T, E = Error> {
           ? Promise.resolve()
               .then(() => fn(either.value))
               .then((value) => new Success(value) as Either<U, E>)
-              .catch(
-                (error) =>
-                  new Failure(
-                    error instanceof Error ? error.message : error
-                  ) as Either<U, E>
-              )
-          : (new Failure(either.error) as Either<U, E>)
-      )
+              .catch((error) => new Failure(error instanceof Error ? error.message : error) as Either<U, E>)
+          : (new Failure(either.error) as Either<U, E>),
+      ),
     );
   }
 
@@ -177,17 +154,10 @@ export class Monad<T, E = Error> {
         either.isSuccess()
           ? Promise.resolve()
               .then(() => fn(either.value))
-              .catch(
-                (error) =>
-                  new Failure(
-                    error instanceof Error ? error.message : error
-                  ) as Either<U, E>
-              )
+              .catch((error) => new Failure(error instanceof Error ? error.message : error) as Either<U, E>)
               .then((value) => {
                 if (value instanceof Monad) {
-                  return value
-                    .run()
-                    .then((innerEither) => innerEither as Either<U, E>);
+                  return value.run().then((innerEither) => innerEither as Either<U, E>);
                 } else if (value instanceof Promise) {
                   return value
                     .then((result) => new Success(result) as Either<U, E>)
@@ -198,18 +168,14 @@ export class Monad<T, E = Error> {
                   return new Success(value) as Either<U, E>;
                 }
               })
-          : Promise.resolve(new Failure(either.error) as Either<U, E>)
-      )
+          : Promise.resolve(new Failure(either.error) as Either<U, E>),
+      ),
     );
   }
 
   recover(fn: (error: E) => T): Monad<T, E> {
     return new Monad(
-      this.value.then((either) =>
-        either.isSuccess()
-          ? either
-          : (new Success(fn(either.error)) as Either<T, E>)
-      )
+      this.value.then((either) => (either.isSuccess() ? either : (new Success(fn(either.error)) as Either<T, E>))),
     );
   }
 
@@ -218,11 +184,8 @@ export class Monad<T, E = Error> {
       this.value.then((either) =>
         either.isSuccess()
           ? either
-          : (typeof alternative === "function"
-              ? alternative(either.error)
-              : alternative
-            ).run()
-      )
+          : (typeof alternative === "function" ? alternative(either.error) : alternative).run(),
+      ),
     );
   }
 
@@ -232,14 +195,12 @@ export class Monad<T, E = Error> {
       continueIfNoMatch: false,
       mode: MatchMode.FIRST,
       continueOnError: false,
-    }
+    },
   ): Monad<T, E> {
     return new Monad(
       this.value.then(async (either) => {
         if (either.isSuccess()) {
-          const conditionsArray = Array.isArray(conditions)
-            ? conditions
-            : [conditions];
+          const conditionsArray = Array.isArray(conditions) ? conditions : [conditions];
           let matched = false;
           for (const condition of conditionsArray) {
             if (condition.condition(either.value)) {
@@ -251,9 +212,7 @@ export class Monad<T, E = Error> {
                 }
               } catch (error) {
                 if (options.continueOnError) return either;
-                return new Failure(
-                  error instanceof Error ? error.message : error
-                ) as Either<T, E>;
+                return new Failure(error instanceof Error ? error.message : error) as Either<T, E>;
               }
             }
           }
@@ -264,14 +223,13 @@ export class Monad<T, E = Error> {
           }
         }
         return either;
-      })
+      }),
     );
   }
 
   filter<E2 = E>(
     predicate: (value: T) => boolean | Promise<boolean>,
-    errorFn: (value: T) => E2 = () =>
-      "Value did not satisfy the predicate" as any as E2
+    errorFn: (value: T) => E2 = () => "Value did not satisfy the predicate" as any as E2,
   ): Monad<T, E | E2> {
     return new Monad<T, E | E2>(
       this.value.then(async (either) => {
@@ -282,10 +240,8 @@ export class Monad<T, E = Error> {
         } catch (error) {
           return new Failure<T, E2>(errorFn(either.value));
         }
-        return satisfiesPredicate
-          ? either
-          : new Failure<T, E2>(errorFn(either.value));
-      })
+        return satisfiesPredicate ? either : new Failure<T, E2>(errorFn(either.value));
+      }),
     );
   }
 
@@ -296,19 +252,14 @@ export class Monad<T, E = Error> {
           await Promise.resolve(fn(either.value));
         }
         return either;
-      })
+      }),
     );
   }
 
-  async fold<U>(
-    onSuccess: (value: T) => U,
-    onFailure: (error: E) => U
-  ): Promise<FoldResult<U>> {
+  async fold<U>(onSuccess: (value: T) => U, onFailure: (error: E) => U): Promise<FoldResult<U>> {
     try {
       const either = await this.run();
-      const result = either.isSuccess()
-        ? onSuccess(either.value)
-        : onFailure(either.error);
+      const result = either.isSuccess() ? onSuccess(either.value) : onFailure(either.error);
       return { result };
     } catch (error) {
       return { error };
@@ -318,7 +269,7 @@ export class Monad<T, E = Error> {
   log<L = Console>(
     logger?: L,
     transformer: (either: Either<T, E>) => any = (either) =>
-      either.isSuccess() ? `Success: ${either.value}` : `Error: ${either.error}`
+      either.isSuccess() ? `Success: ${either.value}` : `Error: ${either.error}`,
   ): Monad<T, E> {
     return new Monad(
       this.value.then((either) => {
@@ -329,7 +280,7 @@ export class Monad<T, E = Error> {
           console.log(transformer(either));
         }
         return either;
-      })
+      }),
     );
   }
 

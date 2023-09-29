@@ -44,21 +44,6 @@ type RetryOptions<E> = {
   onError?: (error: E, attempt: number) => void;
 };
 
-type Cancelable = {
-  cancel: (reason?: string) => void;
-};
-
 type FoldResult<U> = { result?: U; error?: Error };
 
-export {
-  Either,
-  Success,
-  Failure,
-  MatchCondition,
-  MatchMode,
-  MatchOptions,
-  NamedMonad,
-  RetryOptions,
-  Cancelable,
-  FoldResult,
-};
+export { Either, Success, Failure, MatchCondition, MatchMode, MatchOptions, NamedMonad, RetryOptions, FoldResult };

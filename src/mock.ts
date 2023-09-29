@@ -1,3 +1,4 @@
+/* eslint-disable */
 export type RequestType = {
   name: string;
   async?: boolean;
@@ -27,7 +28,7 @@ export const verifyInput = (request: RequestType): VerifiedRequestType => {
 };
 export const asyncFetchAdditionalData = (
   verifiedRequest: VerifiedRequestType,
-  options?: { age: number }
+  options?: { age: number },
 ): Promise<WithAdditionalDataType> => {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -37,7 +38,7 @@ export const asyncFetchAdditionalData = (
 };
 export const asyncFetchAdditionalDataWithError = (
   _1: VerifiedRequestType,
-  _2?: { age: number }
+  _2?: { age: number },
 ): Promise<WithAdditionalDataType> => {
   return new Promise((_, reject) => {
     setTimeout(() => {
@@ -50,11 +51,7 @@ export const remapData = (data: WithAdditionalDataType): RemappedType => {
   return { customer: { name: data.name, age: data.age } };
 };
 
-export const generateMatches = (ms: {
-  names: string[];
-  matched: boolean[];
-  age?: number[];
-}): any => {
+export const generateMatches = (ms: { names: string[]; matched: boolean[]; age?: number[] }): any => {
   return ms.names!.map((name, i) => ({
     condition: (value: VerifiedRequestType) => value!.name === name,
     action: (value: VerifiedRequestType) => ({

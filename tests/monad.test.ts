@@ -88,14 +88,10 @@ const basicMonadTests = () => {
   it("handles asynchronous errors correctly", async () => {
     const badRequest: VerifiedRequestType = { name: "Alice" };
     // Mocking asyncFetchAdditionalData to simulate an error
-    const asyncFetchAdditionalDataWithError = async (
-      data: VerifiedRequestType
-    ) => {
+    const asyncFetchAdditionalDataWithError = async (data: VerifiedRequestType) => {
       throw new Error("Async error");
     };
-    const result = await Monad.of(badRequest)
-      .flatMap(asyncFetchAdditionalDataWithError)
-      .run();
+    const result = await Monad.of(badRequest).flatMap(asyncFetchAdditionalDataWithError).run();
     expect(result.isSuccess()).toBe(false);
     if (!result.isSuccess()) {
       expect(result.error).toBe("Async error");
@@ -194,8 +190,7 @@ const advancedMonadTests = () => {
   it("handles nested monads correctly", async () => {
     const request: RequestType = { name: "Alice" };
 
-    const nestedMonad = (data: VerifiedRequestType) =>
-      Monad.of({ ...data, age: 30 });
+    const nestedMonad = (data: VerifiedRequestType) => Monad.of({ ...data, age: 30 });
 
     const result = await Monad.of(request)
       .flatMap(verifyInput)
@@ -246,10 +241,7 @@ const advancedMonadTests = () => {
       names: ["Alice", "Bob"],
       matched: [true, true],
     });
-    const result = await Monad.of<RequestType>(request)
-      .flatMap(verifyInput)
-      .match(matches)
-      .run();
+    const result = await Monad.of<RequestType>(request).flatMap(verifyInput).match(matches).run();
     expect(result.isSuccess()).toBe(true);
     if (result.isSuccess()) {
       expect(result.value).toEqual({ name: "Alice", matched: true });
@@ -262,10 +254,7 @@ const advancedMonadTests = () => {
       names: ["Alice", "Bob"],
       matched: [true, true],
     });
-    const result = await Monad.of<RequestType>(request)
-      .flatMap(verifyInput)
-      .match(matches)
-      .run();
+    const result = await Monad.of<RequestType>(request).flatMap(verifyInput).match(matches).run();
 
     expect(result.isSuccess()).toBe(false);
     if (!result.isSuccess()) {
@@ -332,10 +321,7 @@ const advancedMonadTests = () => {
       },
     ];
 
-    const result = await Monad.of<RequestType>(request)
-      .flatMap(verifyInput)
-      .match(matches)
-      .run();
+    const result = await Monad.of<RequestType>(request).flatMap(verifyInput).match(matches).run();
 
     expect(result.isSuccess()).toBe(false);
     if (!result.isSuccess()) {
@@ -369,9 +355,7 @@ const advancedMonadTests = () => {
     const matches: MatchCondition<VerifiedRequestType, Error>[] = [
       {
         condition: (value: VerifiedRequestType) => value.name === "Alice",
-        action: async (
-          _: VerifiedRequestType
-        ): Promise<VerifiedRequestType> => {
+        action: async (_: VerifiedRequestType): Promise<VerifiedRequestType> => {
           return new Promise((resolve) => {
             setTimeout(() => {
               resolve({ name: "Alice", async: true });
@@ -381,10 +365,7 @@ const advancedMonadTests = () => {
       },
     ];
 
-    const result = await Monad.of<RequestType>(request)
-      .flatMap(verifyInput)
-      .match(matches)
-      .run();
+    const result = await Monad.of<RequestType>(request).flatMap(verifyInput).match(matches).run();
 
     expect(result.isSuccess()).toBe(true);
     if (result.isSuccess()) {
@@ -398,9 +379,7 @@ const advancedMonadTests = () => {
     const matches: MatchCondition<VerifiedRequestType, Error>[] = [
       {
         condition: (value: VerifiedRequestType) => value.name === "Alice",
-        action: async (
-          value: VerifiedRequestType
-        ): Promise<VerifiedRequestType> => {
+        action: async (value: VerifiedRequestType): Promise<VerifiedRequestType> => {
           return new Promise((resolve) => {
             setTimeout(() => {
               resolve({ name: "Alice", async: true });
@@ -416,10 +395,7 @@ const advancedMonadTests = () => {
       },
     ];
 
-    const result = await Monad.of<RequestType>(request)
-      .flatMap(verifyInput)
-      .match(matches)
-      .run();
+    const result = await Monad.of<RequestType>(request).flatMap(verifyInput).match(matches).run();
 
     expect(result.isSuccess()).toBe(true);
     if (result.isSuccess()) {
@@ -432,9 +408,7 @@ const advancedMonadTests = () => {
     const matches: MatchCondition<VerifiedRequestType, Error>[] = [
       {
         condition: (value: VerifiedRequestType) => value.name === "Alice",
-        action: async (
-          value: VerifiedRequestType
-        ): Promise<VerifiedRequestType> => {
+        action: async (value: VerifiedRequestType): Promise<VerifiedRequestType> => {
           return new Promise((_, reject) => {
             setTimeout(() => {
               reject(new Error("Action rejected"));
@@ -443,10 +417,7 @@ const advancedMonadTests = () => {
         },
       },
     ];
-    const result = await Monad.of<RequestType>(request)
-      .flatMap(verifyInput)
-      .match(matches)
-      .run();
+    const result = await Monad.of<RequestType>(request).flatMap(verifyInput).match(matches).run();
     expect(result.isSuccess()).toBe(false);
     if (!result.isSuccess()) {
       expect(result.error).toBe("Action rejected");
@@ -573,7 +544,7 @@ const advancedMonadTests = () => {
       const monad = Monad.of<number>(-5);
       const filtered = monad.filter(
         (value) => value > 0,
-        () => "Custom Error"
+        () => "Custom Error",
       );
       const result = await filtered.run();
 
@@ -587,7 +558,7 @@ const advancedMonadTests = () => {
       const monad = Monad.fail<number, string>("Original Error");
       const filtered = monad.filter(
         (value) => value > 0,
-        () => "Custom Error"
+        () => "Custom Error",
       );
       const result = await filtered.run();
 
@@ -611,9 +582,7 @@ const advancedMonadTests = () => {
     });
 
     it("filters an array", async () => {
-      const monad = Monad.of<number[]>([1, 2, 3, 4, 5]).filter((value) =>
-        value.includes(3)
-      );
+      const monad = Monad.of<number[]>([1, 2, 3, 4, 5]).filter((value) => value.includes(3));
 
       const result = await monad.run();
       expect(result.isSuccess()).toBe(true);
@@ -625,7 +594,7 @@ const advancedMonadTests = () => {
     it("returns a custom error when the predicate is false", async () => {
       const monad = Monad.of<number>(15).filter(
         (value) => value >= 18,
-        () => "Not an adult"
+        () => "Not an adult",
       );
 
       const result = await monad.run();
@@ -660,12 +629,10 @@ const advancedMonadTests = () => {
     it("transitions to Failure if async predicate rejects", async () => {
       const monad = Monad.of<number>(10).filter(
         async (value) => {
-          await new Promise((_, reject) =>
-            setTimeout(() => reject(new Error("Predicate Error")), 20)
-          );
+          await new Promise((_, reject) => setTimeout(() => reject(new Error("Predicate Error")), 20));
           return value >= 10;
         },
-        () => "Predicate Failed"
+        () => "Predicate Failed",
       );
       const result = await monad.run();
       expect(result.isSuccess()).toBe(false);
@@ -725,9 +692,7 @@ const advancedMonadTests = () => {
         let errorCaught = "";
         const monad = Monad.of<number>(42).tap(async (value) => {
           try {
-            await new Promise((_, rej) =>
-              setTimeout(() => rej("Async Error"), 100)
-            ); // simulate async rejection
+            await new Promise((_, rej) => setTimeout(() => rej("Async Error"), 100)); // simulate async rejection
           } catch (error) {
             errorCaught = error;
           }
@@ -917,11 +882,7 @@ const advancedMonadTests = () => {
   describe("TimeOut function", () => {
     it("completes successfully before timeout", async () => {
       const operation = (signal?: AbortSignal) => Monad.of<number>(42);
-      const result = await Monad.timeout(
-        operation,
-        50,
-        new Error("Operation timed out")
-      ).run();
+      const result = await Monad.timeout(operation, 50, new Error("Operation timed out")).run();
       expect(result.isSuccess()).toBe(true);
       if (result.isSuccess()) {
         expect(result.value).toBe(42);
@@ -930,16 +891,8 @@ const advancedMonadTests = () => {
 
     it("fails due to timeout", async () => {
       const operation = (signal?: AbortSignal) =>
-        new Monad<number>(
-          new Promise((resolve) =>
-            setTimeout(() => resolve(new Success(42)), 100)
-          )
-        );
-      const result = await Monad.timeout(
-        operation,
-        50,
-        new Error("Operation timed out")
-      ).run();
+        new Monad<number>(new Promise((resolve) => setTimeout(() => resolve(new Success(42)), 100)));
+      const result = await Monad.timeout(operation, 50, new Error("Operation timed out")).run();
       expect(result.isSuccess()).toBe(false);
       if (!result.isSuccess()) {
         expect(result.error.message).toBe("Operation timed out");
@@ -957,13 +910,9 @@ const advancedMonadTests = () => {
                 reject(new Error("Operation aborted"));
               });
             }
-          })
+          }),
         );
-      const result = await Monad.timeout(
-        operation,
-        50,
-        new Error("Operation timed out")
-      ).run();
+      const result = await Monad.timeout(operation, 50, new Error("Operation timed out")).run();
       expect(result.isSuccess()).toBe(false);
       if (!result.isSuccess()) {
         expect(result.error.message).toBe("Operation timed out");
@@ -982,13 +931,9 @@ const advancedMonadTests = () => {
                 resolve(new Failure(new Error("Operation aborted")));
               });
             }
-          })
+          }),
         );
-      const result = await Monad.timeout(
-        operation,
-        50,
-        new Error("Operation timed out")
-      ).run();
+      const result = await Monad.timeout(operation, 50, new Error("Operation timed out")).run();
       expect(result.isSuccess()).toBe(false);
 
       if (!result.isSuccess()) {
@@ -1002,19 +947,17 @@ const advancedMonadTests = () => {
       const monad = Monad.of<number>(42);
       const { result, error } = await monad.fold(
         (value) => `Success: ${value}`,
-        (error) => `Error: ${error.message}`
+        (error) => `Error: ${error.message}`,
       );
       expect(result).toBe("Success: 42");
       expect(error).toBeUndefined();
     });
 
     it("should handle error case with fold", async () => {
-      const monad = Monad.fail<number, Error>(
-        new Error("Something went wrong")
-      );
+      const monad = Monad.fail<number, Error>(new Error("Something went wrong"));
       const { result, error } = await monad.fold(
         (value) => `Success: ${value}`,
-        (error) => `Error: ${error.message}`
+        (error) => `Error: ${error.message}`,
       );
       expect(result).toBe("Error: Something went wrong");
       expect(error).toBeUndefined();
@@ -1026,7 +969,7 @@ const advancedMonadTests = () => {
         (_) => {
           throw new Error("Failed in onSuccess");
         },
-        (error) => `Error: ${error.message}`
+        (error) => `Error: ${error.message}`,
       );
       expect(result).toBeUndefined();
       expect(error).toBeDefined();
@@ -1073,9 +1016,7 @@ const advancedMonadTests = () => {
 
     it("should propagate the error if the alternative monad also fails", async () => {
       const monad = Monad.fail<number, Error>(new Error("Original Error"));
-      const alternativeMonad = monad.orElse(
-        Monad.fail(new Error("Alternative Error"))
-      );
+      const alternativeMonad = monad.orElse(Monad.fail(new Error("Alternative Error")));
 
       const result = await alternativeMonad.run();
       expect(result.isSuccess()).toBe(false);
@@ -1105,9 +1046,7 @@ const advancedMonadTests = () => {
     it("should apply a custom transformer to the log message", async () => {
       const logger = { log: jest.fn() };
       const transformer = (either: Either<number, Error>) =>
-        either.isSuccess()
-          ? `Value is: ${either.value}`
-          : `Oops: ${either.error}`;
+        either.isSuccess() ? `Value is: ${either.value}` : `Oops: ${either.error}`;
 
       const monad = Monad.of(15).log(logger, transformer);
 
@@ -1117,26 +1056,17 @@ const advancedMonadTests = () => {
     it("should log the error if the monad is a failure", async () => {
       const logger = { log: jest.fn() };
 
-      const monad = Monad.fail<number, Error>(
-        new Error("Something went wrong")
-      ).log(logger);
+      const monad = Monad.fail<number, Error>(new Error("Something went wrong")).log(logger);
 
       await monad.run();
-      expect(logger.log).toHaveBeenCalledWith(
-        "Error: Error: Something went wrong"
-      );
+      expect(logger.log).toHaveBeenCalledWith("Error: Error: Something went wrong");
     });
     it("should apply a custom transformer to the error log message", async () => {
       const logger = { log: jest.fn() };
       const transformer = (either: Either<number, Error>) =>
-        either.isSuccess()
-          ? `Value: ${either.value}`
-          : `Error occurred: ${either.error?.message}`;
+        either.isSuccess() ? `Value: ${either.value}` : `Error occurred: ${either.error?.message}`;
 
-      const monad = Monad.fail<number, Error>(new Error("Bad data")).log(
-        logger,
-        transformer
-      );
+      const monad = Monad.fail<number, Error>(new Error("Bad data")).log(logger, transformer);
 
       await monad.run();
       expect(logger.log).toHaveBeenCalledWith("Error occurred: Bad data");
@@ -1172,9 +1102,7 @@ const advancedMonadTests = () => {
       const logger = { log: (message: string) => (logMessage = message) };
       const operation = () => Monad.of(42);
       const transformer = (duration: number, result: Either<number, Error>) =>
-        `Custom log: ${
-          result.isSuccess() ? "Success" : "Failure"
-        } in ${duration}ms`;
+        `Custom log: ${result.isSuccess() ? "Success" : "Failure"} in ${duration}ms`;
 
       await Monad.timeExecution(operation, logger, transformer);
 

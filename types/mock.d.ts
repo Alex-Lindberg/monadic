@@ -1,33 +1,35 @@
 export type RequestType = {
-    name: string;
-    async?: boolean;
+  name: string;
+  async?: boolean;
 };
 export type VerifiedRequestType = {
-    name: string;
-    async?: boolean;
+  name: string;
+  async?: boolean;
 };
 export type WithAdditionalDataType = {
-    name: string;
-    age: number;
-    async?: boolean;
+  name: string;
+  age: number;
+  async?: boolean;
 };
 export type RemappedType = {
-    customer: {
-        name: string;
-        age: number;
-    };
-    async?: boolean;
+  customer: {
+    name: string;
+    age: number;
+  };
+  async?: boolean;
 };
 export declare const verifyInput: (request: RequestType) => VerifiedRequestType;
-export declare const asyncFetchAdditionalData: (verifiedRequest: VerifiedRequestType, options?: {
+export declare const asyncFetchAdditionalData: (
+  verifiedRequest: VerifiedRequestType,
+  options?: {
     age: number;
-}) => Promise<WithAdditionalDataType>;
-export declare const asyncFetchAdditionalDataWithError: (_1: VerifiedRequestType, _2?: {
+  },
+) => Promise<WithAdditionalDataType>;
+export declare const asyncFetchAdditionalDataWithError: (
+  _1: VerifiedRequestType,
+  _2?: {
     age: number;
-}) => Promise<WithAdditionalDataType>;
+  },
+) => Promise<WithAdditionalDataType>;
 export declare const remapData: (data: WithAdditionalDataType) => RemappedType;
-export declare const generateMatches: (ms: {
-    names: string[];
-    matched: boolean[];
-    age?: number[];
-}) => any;
+export declare const generateMatches: (ms: { names: string[]; matched: boolean[]; age?: number[] }) => any;
