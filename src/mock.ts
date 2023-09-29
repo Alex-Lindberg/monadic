@@ -61,3 +61,24 @@ export const generateMatches = (ms: { names: string[]; matched: boolean[]; age?:
     }),
   }));
 };
+
+export class BadRequestError extends Error {
+  constructor(message: string) {
+    super(message);
+  }
+}
+export class GatewayError extends Error {
+  constructor(message: string) {
+    super(message);
+  }
+}
+
+export class OtherError extends Error {
+  constructor(message: string) {
+    super(message);
+  }
+}
+
+export const errorHandler = (error: Error): void => {
+  console.error(error.message);
+}

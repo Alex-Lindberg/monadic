@@ -27,7 +27,8 @@
     "start": "ts-node src/index.ts",
     "test": "jest --verbose",
     "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
-    "docs": "typedoc --options typedoc.json ./src"
+    "docs": "typedoc --options typedoc.json ./src",
+    "prepublishOnly": "npm test && npm run build"
   },
   "jest": {
     "transform": {

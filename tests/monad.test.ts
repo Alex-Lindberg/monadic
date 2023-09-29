@@ -7,9 +7,12 @@ import {
   WithAdditionalDataType,
   asyncFetchAdditionalDataWithError,
   generateMatches,
+  BadRequestError,
+  GatewayError,
+  OtherError,
 } from "../src/mock";
 import { Monad } from "../src/monad";
-import { Either, Failure, MatchCondition, Success } from "../src/util";
+import { Either, Failure, HttpError, MatchCondition, Success } from "../src/util";
 
 const mockInputTests = () => {
   it("correctly verifies valid input", async () => {
@@ -1120,6 +1123,57 @@ const advancedMonadTests = () => {
       expect(logMessage).toMatch(/Execution took \d+(\.\d+)?ms/);
       expect(logMessage).toContain("Error: Oops"); // if error is included in the log message by default
     });
+  });
+
+  describe("Enhanced Error Types", () => {
+    
+    
+    it("handles specific errors with the provided handler", async () => {
+      const operation = Monad.fail(new BadRequestError("Bad Request"));
+      const handler = jest.fn((error) => Monad.of(error.message));
+
+      const result = await operation.handleSpecificErrors([BadRequestError, GatewayError], handler).run();
+
+      expect(handler).toHaveBeenCalled();
+      expect(result.isSuccess()).toBe(true);
+      if (result.isSuccess()) {
+        expect(result.value).toBe("Bad Request");
+      }
+    });
+
+    it("does not handle non-specified errors", async () => {
+      const operation = Monad.fail(new OtherError("Other Error"));
+      const handler = jest.fn((error) => Monad.of(error.message));
+
+      await operation.handleSpecificErrors([BadRequestError, GatewayError], handler).run();
+      expect(handler).not.toHaveBeenCalled();
+    });
+
+    it('handles specific HTTP errors with the provided handler', async () => {
+      const operation = Monad.fail(new HttpError(400, 'Bad Request'));
+      const handler = jest.fn((error: HttpError) => Monad.of<unknown, HttpError>(error.message));
+  
+      const result = await operation
+          .handleHttpErrors([400, 404], handler)
+          .run();
+  
+      expect(handler).toHaveBeenCalled();
+      expect(result.isSuccess()).toBe(true);
+      if (result.isSuccess()) {
+        expect(result.value).toBe('Bad Request');
+      }
+  });
+  
+  it('does not handle non-specified HTTP errors', async () => {
+      const operation = Monad.fail(new HttpError(500, 'Server Error'));
+      const handler = jest.fn((error) => Monad.of<unknown, HttpError>('handled'));
+  
+      await operation
+          .handleHttpErrors([400, 404], handler)
+          .run();
+  
+      expect(handler).not.toHaveBeenCalled();
+  });
   });
 };
 

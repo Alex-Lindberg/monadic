@@ -46,4 +46,27 @@ type RetryOptions<E> = {
 
 type FoldResult<U> = { result?: U; error?: Error };
 
-export { Either, Success, Failure, MatchCondition, MatchMode, MatchOptions, NamedMonad, RetryOptions, FoldResult };
+type ErrorType = new (...args: any[]) => Error;
+class HttpError extends Error {
+  constructor(
+    public statusCode: number,
+    message: string,
+  ) {
+    super(message);
+    Object.setPrototypeOf(this, new.target.prototype);
+  }
+}
+
+export {
+  Either,
+  Success,
+  Failure,
+  MatchCondition,
+  MatchMode,
+  MatchOptions,
+  NamedMonad,
+  RetryOptions,
+  FoldResult,
+  ErrorType,
+  HttpError,
+};

@@ -8,15 +8,21 @@ import {
   NamedMonad,
   RetryOptions,
   FoldResult,
+  ErrorType,
+  HttpError,
 } from "./util";
 
 export class Monad<T, E = Error> {
   constructor(private value: Promise<Either<T, E>>) {}
 
   // ---- Static methods ----
-  static of<T>(value: T): Monad<T> {
+  static of<T, E = Error>(value: T, error?: E): Monad<T, E> {
+    if (error) {
+        return new Monad(Promise.resolve(new Failure(error)));
+    }
     return new Monad(Promise.resolve(new Success(value)));
-  }
+}
+
 
   static fromPromise<T, E = Error>(promise: Promise<T>): Monad<T, E> {
     return new Monad<T, E>(
@@ -281,6 +287,26 @@ export class Monad<T, E = Error> {
         }
         return either;
       }),
+    );
+  }
+
+  handleSpecificErrors(errorTypes: ErrorType[], handler: (error: E) => Monad<T, E>): Monad<T, E> {
+    return new Monad(
+      this.value.then((either) =>
+        !either.isSuccess() && errorTypes.some((type) => either.error instanceof type)
+          ? handler(either.error).run()
+          : either,
+      ),
+    );
+  }
+
+  handleHttpErrors(statusCodes: number[], handler: (error: HttpError) => Monad<T, E>): Monad<T, E> {
+    return new Monad(
+      this.value.then((either) =>
+        !either.isSuccess() && either.error instanceof HttpError && statusCodes.includes(either.error.statusCode)
+          ? handler(either.error).run()
+          : either,
+      ),
     );
   }
 
