@@ -130,9 +130,9 @@ export class Monad<T, E = Error> {
     );
   }
 
-  static async timeExecution<T, E = Error>(
+  static async timeExecution<T, E = Error, L = Console>(
     operation: () => Monad<T, E>,
-    logger: { log: (message: string) => void } = console,
+    logger: L,
     transformer?: (duration: number, result: Either<T, E>) => string
   ): Promise<Either<T, E>> {
     const startTime = performance.now();
@@ -146,8 +146,9 @@ export class Monad<T, E = Error> {
     } else if (!result.isSuccess()) {
       message += ` - Error: ${result.error}`; // Include error information in the log message
     }
-    logger.log(message);
-
+    if (logger && typeof (logger as any).log === "function")
+      (logger as any).log(message);
+    else console.log(message);
     return result;
   }
 
@@ -314,7 +315,7 @@ export class Monad<T, E = Error> {
     }
   }
 
-  log<L>(
+  log<L = Console>(
     logger?: L,
     transformer: (either: Either<T, E>) => any = (either) =>
       either.isSuccess() ? `Success: ${either.value}` : `Error: ${either.error}`
