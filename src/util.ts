@@ -10,6 +10,11 @@ import { Monad } from "./monad";
  */
 class Success<T, E> {
   constructor(public value: T) {}
+  /**
+   * Returns true if the value is a success
+   * 
+   * @returns {boolean} true if the value is a success
+   */
   isSuccess(): this is Success<T, E> {
     return true;
   }
@@ -25,6 +30,11 @@ class Success<T, E> {
  */
 class Failure<T, E> {
   constructor(public error: E) {}
+  /**
+   * Returns true if the value is a failure
+   * 
+   * @returns {boolean} true if the value is a failure
+   */
   isSuccess(): this is Success<T, E> {
     return false;
   }
@@ -49,7 +59,19 @@ type Either<T, E> = Success<T, E> | Failure<T, E>;
  * @template E The type of the error
  */
 type MatchCondition<T, E> = {
+  /**
+   * The condition
+   * 
+   * @param value the value
+   * @returns {boolean} true if the condition is met
+   */
   condition: (value: T) => boolean;
+  /**
+   * The action to perform if the condition is met
+   * 
+   * @param value the value
+   * @returns {T | E | Promise<T | E>} the action
+   */
   action: (value: T) => T | E | Promise<T | E>;
 };
 
