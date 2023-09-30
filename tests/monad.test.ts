@@ -8,11 +8,17 @@ import {
   asyncFetchAdditionalDataWithError,
   generateMatches,
   paginatedFetch,
+  fetchTransformedValue,
+  MyEvent,
+  MyError,
+  fetchValue,
 } from "./mock";
 import { Monad } from "../src/monad";
-import { Failure, Success, Util, toAsyncIterableMonad } from "../src/util";
+import { EventMonad, EventStream } from "../src/eventMonad";
+import { Failure, Success, MonadUtil, toAsyncIterableMonad } from "../src/util";
 import { ErrorCriteria, MatchCondition, Either } from "../src/types";
 import nock from "nock";
+import EventSource from 'eventsource';
 
 const mockInputTests = () => {
   it("correctly verifies valid input", async () => {
@@ -436,7 +442,7 @@ const advancedMonadTests = () => {
       };
       const monad2 = { monad: Monad.of<number>(30) };
 
-      const combined = Util.zip(monad1, monad2);
+      const combined = MonadUtil.zip(monad1, monad2);
       const result = await combined.yield();
 
       expect(result.isSuccess()).toBe(true);
@@ -451,7 +457,7 @@ const advancedMonadTests = () => {
         monad: Monad.fail<{ name: string }, string>("First error"),
       };
       const monad2 = { monad: Monad.fail<number, string>("Second error") };
-      const combined = Util.zip(monad1, monad2); // Corrected the function call
+      const combined = MonadUtil.zip(monad1, monad2); // Corrected the function call
       const result = await combined.yield();
 
       expect(result.isSuccess()).toBe(false);
@@ -467,7 +473,7 @@ const advancedMonadTests = () => {
         name: "someMonad",
       };
       const monad2 = { monad: Monad.of<number>(30), name: "otherMonad" };
-      const combined = Util.zip(monad1, monad2); // Corrected the function call
+      const combined = MonadUtil.zip(monad1, monad2); // Corrected the function call
       const result = await combined.yield();
 
       expect(result.isSuccess()).toBe(true);
@@ -487,7 +493,7 @@ const advancedMonadTests = () => {
       const monad2 = { monad: Monad.of<number>(30) };
       const monad3 = { monad: Monad.of<boolean>(true), name: "booleanMonad" };
 
-      const combined = Util.zip([monad1, monad2, monad3]);
+      const combined = MonadUtil.zip([monad1, monad2, monad3]);
       const result = await combined.yield();
 
       expect(result.isSuccess()).toBe(true);
@@ -510,7 +516,7 @@ const advancedMonadTests = () => {
         monad: Monad.fail<number, Error>(new Error("Something")),
         name: "booleanMonad",
       };
-      const combined = Util.zip([monad1, monad2, monad3]);
+      const combined = MonadUtil.zip([monad1, monad2, monad3]);
       const result = await combined.yield();
 
       expect(result.isSuccess()).toBe(false);
@@ -792,7 +798,7 @@ const advancedMonadTests = () => {
           return attemptCounter;
         });
 
-      const result = await Util.retry(operationFn, {
+      const result = await MonadUtil.retry(operationFn, {
         times: 5,
         delay: 10,
         onError: (error, attempt) => {},
@@ -827,7 +833,7 @@ const advancedMonadTests = () => {
           return attemptCounter;
         });
 
-      const result = await Util.retry(operationFn, {
+      const result = await MonadUtil.retry(operationFn, {
         times: 5,
         delay: 10,
         backoffFactor: 2,
@@ -848,7 +854,7 @@ const advancedMonadTests = () => {
           throw new Error("Failed");
         });
 
-      const result = await Util.retry(operationFn, {
+      const result = await MonadUtil.retry(operationFn, {
         times: 3,
         delay: 10,
       }).yield();
@@ -868,7 +874,7 @@ const advancedMonadTests = () => {
           attemptCounter += 1;
           throw new Error("Failed");
         });
-      const result = await Util.retry(operationFn, {
+      const result = await MonadUtil.retry(operationFn, {
         times: 5,
         delay: 10,
         onError: (error, attempt) => {
@@ -885,7 +891,7 @@ const advancedMonadTests = () => {
   describe("TimeOut function", () => {
     it("completes successfully before timeout", async () => {
       const operation = (signal?: AbortSignal) => Monad.of<number>(42);
-      const result = await Util.timeout(operation, 50, new Error("Operation timed out")).yield();
+      const result = await MonadUtil.timeout(operation, 50, new Error("Operation timed out")).yield();
       expect(result.isSuccess()).toBe(true);
       if (result.isSuccess()) {
         expect(result.value).toBe(42);
@@ -895,7 +901,7 @@ const advancedMonadTests = () => {
     it("fails due to timeout", async () => {
       const operation = (signal?: AbortSignal) =>
         new Monad<number>(new Promise((resolve) => setTimeout(() => resolve(new Success(42)), 100)));
-      const result = await Util.timeout(operation, 50, new Error("Operation timed out")).yield();
+      const result = await MonadUtil.timeout(operation, 50, new Error("Operation timed out")).yield();
       expect(result.isSuccess()).toBe(false);
       if (!result.isSuccess()) {
         expect(result.error.message).toBe("Operation timed out");
@@ -915,7 +921,7 @@ const advancedMonadTests = () => {
             }
           }),
         );
-      const result = await Util.timeout(operation, 50, new Error("Operation timed out")).yield();
+      const result = await MonadUtil.timeout(operation, 50, new Error("Operation timed out")).yield();
       expect(result.isSuccess()).toBe(false);
       if (!result.isSuccess()) {
         expect(result.error.message).toBe("Operation timed out");
@@ -936,7 +942,7 @@ const advancedMonadTests = () => {
             }
           }),
         );
-      const result = await Util.timeout(operation, 50, new Error("Operation timed out")).yield();
+      const result = await MonadUtil.timeout(operation, 50, new Error("Operation timed out")).yield();
       expect(result.isSuccess()).toBe(false);
 
       if (!result.isSuccess()) {
@@ -1082,7 +1088,7 @@ const advancedMonadTests = () => {
       const logger = { log: (message: string) => (logMessage = message) };
       const operation = () => Monad.of(42).map((value) => value * 2);
 
-      const result = await Util.timeExecution(operation, logger);
+      const result = await MonadUtil.timeExecution(operation, logger);
 
       expect(result.isSuccess()).toBe(true);
       expect(logMessage).toMatch(/Execution took \d+(\.\d+)?ms/);
@@ -1095,7 +1101,7 @@ const advancedMonadTests = () => {
       };
       const operation = () => Monad.of(42);
 
-      await Util.timeExecution(operation, customLogger);
+      await MonadUtil.timeExecution(operation, customLogger);
 
       expect(customLogCalled).toBe(true);
     });
@@ -1107,7 +1113,7 @@ const advancedMonadTests = () => {
       const transformer = (duration: number, result: Either<number, Error>) =>
         `Custom log: ${result.isSuccess() ? "Success" : "Failure"} in ${duration}ms`;
 
-      await Util.timeExecution(operation, logger, transformer);
+      await MonadUtil.timeExecution(operation, logger, transformer);
 
       expect(logMessage).toMatch(/^Custom log: Success in \d+(\.\d+)?ms$/);
     });
@@ -1117,7 +1123,7 @@ const advancedMonadTests = () => {
       const logger = { log: (message: string) => (logMessage = message) };
       const operation = () => Monad.fail<number, Error>(new Error("Oops"));
 
-      const result = await Util.timeExecution(operation, logger);
+      const result = await MonadUtil.timeExecution(operation, logger);
 
       expect(!result.isSuccess()).toBe(true);
       expect(logMessage).toMatch(/Execution took \d+(\.\d+)?ms/);
@@ -1235,7 +1241,7 @@ const advancedMonadTests = () => {
         .get("/data?page=3")
         .reply(200, data[2]);
 
-      const monad = await Util.fromAsyncIterable(() => paginatedFetch("https://api.example.com/data", 3));
+      const monad = await MonadUtil.fromAsyncIterable(() => paginatedFetch("https://api.example.com/data", 3));
       const result = await monad.yield();
 
       expect(result.isSuccess()).toBe(true);
@@ -1260,13 +1266,13 @@ const advancedMonadTests = () => {
         .get("/data?page=3")
         .reply(200, data[2]);
 
-      const monad = await Util.fromAsyncIterable(() => paginatedFetch("https://api.example.com/data", 3));
+      const monad = await MonadUtil.fromAsyncIterable(() => paginatedFetch("https://api.example.com/data", 3));
       const result = await monad.yield();
 
       expect(result.isSuccess()).toBe(false);
 
       if (result.isFailure()) {
-        console.log(result.error);
+        expect(result.error).toEqual(expect.any(Error));
         expect(result.error.message).toEqual("Failed to fetch page 2: Request failed with status code 504");
       }
     });
@@ -1300,7 +1306,7 @@ const advancedMonadTests = () => {
         expect(error.message).toEqual("An error occurred");
       }
 
-      expect(values).toEqual([]); // No value should be pushed as the monad is a Failure
+      expect(values).toEqual([]);
     });
 
     it("handles errors during iteration", async () => {
@@ -1318,12 +1324,208 @@ const advancedMonadTests = () => {
       }
     });
   });
+
+  describe("mapAsync tests", () => {
+    it("should transform the items asynchronously", async () => {
+      const items = [1, 2, 3];
+      const monad = Monad.of(items);
+      const asyncMonad = toAsyncIterableMonad(monad);
+
+      nock("https://api.example.com")
+        .get("/transform/1")
+        .reply(200, { data: 2 })
+        .get("/transform/2")
+        .reply(200, { data: 4 })
+        .get("/transform/3")
+        .reply(200, { data: 6 });
+
+      const transformedMonad = await asyncMonad.mapAsync(fetchTransformedValue);
+      const either = await transformedMonad.yield();
+
+      expect(either.isSuccess()).toBe(true);
+      if (either.isSuccess()) {
+        expect(either.value).toEqual([2, 4, 6]);
+      }
+    });
+
+    it("should handle errors during transformation", async () => {
+      const items = [1, 2, 3];
+      const monad = Monad.of(items);
+      const asyncMonad = toAsyncIterableMonad(monad);
+
+      nock("https://api.example.com").get("/transform/1").reply(500, "Internal Server Error");
+
+      const transformedMonad = await asyncMonad.mapAsync(fetchTransformedValue);
+      const either = await transformedMonad.yield();
+
+      expect(either.isFailure()).toBe(true);
+      if (either.isFailure()) {
+        expect(either.error).toEqual(expect.any(Error));
+      }
+    });
+
+    it("should handle errors during iteration", async () => {
+      const monad = Monad.of([1, 2, 3, 4, 5]);
+      const asyncIterableMonad = toAsyncIterableMonad(monad);
+
+      try {
+        await asyncIterableMonad.mapAsync((value) => {
+          if (value === 3) {
+            throw new Error("Error at value 3");
+          }
+          return Promise.resolve(value);
+        });
+      } catch (error) {
+        expect(error.message).toEqual("Error at value 3");
+      }
+    });
+  });
+};
+
+const eventMonadTests = () => {
+
+  describe("Event Monad and Stream", () => {
+    const mockEvent: MyEvent = { type: "TEST_EVENT", payload: { data: "test" } };
+    const mockError: MyError = new Error("An error occurred");
+
+    let eventStream: EventStream<MyEvent, MyError>;
+
+    beforeEach(() => {
+      eventStream = new EventStream<MyEvent, MyError>();
+    });
+
+    it("should emit events", async () => {
+      const listener = jest.fn();
+      eventStream.subscribe(listener);
+
+      eventStream.emit(mockEvent);
+      expect(listener).toHaveBeenCalledWith(expect.any(EventMonad));
+    });
+
+    it("should transform events", async () => {
+      const transformedEvent = { ...mockEvent, payload: { data: "transformed" } };
+
+      eventStream.subscribe((eventMonad) => {
+        eventMonad
+          .map((_) => transformedEvent)
+          .yield()
+          .then((either) => {
+            if (either.isSuccess()) {
+              expect(either.value).toEqual(transformedEvent);
+            }
+          });
+      });
+
+      eventStream.emit(mockEvent);
+    });
+
+    it("should handle errors", async () => {
+      eventStream.subscribe((eventMonad) => {
+        eventMonad
+          .handleErrors(
+            { types: [Error] },
+            () => new EventMonad({ type: "ERROR", payload: { data: "handled" } }, mockError),
+          )
+          .yield()
+          .then((either) => {
+            if (either.isFailure()) {
+              expect(either.error).toEqual(mockError);
+            }
+          });
+      });
+
+      eventStream.emit(mockEvent, mockError);
+    });
+
+    it("should unsubscribe correctly", async () => {
+      const listener = jest.fn();
+      const unsubscribe = eventStream.subscribe(listener);
+
+      unsubscribe();
+      eventStream.emit(mockEvent);
+
+      expect(listener).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('HTTP Events with Nock', () => {
+    const mockEventUrl = 'http://event.com/event';
+
+    it('should receive event over HTTP', async () => {
+      const simulatedEvent = {
+        type: 'EVENT_RECEIVED',
+        payload: { data: 'event data' }
+      };
+  
+      nock('http://event.com')
+        .get('/event')
+        .reply(200, simulatedEvent);
+  
+      const eventMonad = new EventMonad(await fetchValue(mockEventUrl));
+      const processedEvent = eventMonad.map(event => {
+        return { ...event, processed: true };
+      });
+      const either = await processedEvent.yield();
+      if (either.isSuccess()) {
+        expect(either.value.processed).toBe(true);
+      }
+    });
+
+    it('should receive event over HTTP', async () => {
+      const simulatedEvent = {
+        type: 'EVENT_RECEIVED',
+        payload: { error: 'Something unexpected' }
+      };
+  
+      nock('http://event.com')
+        .get('/event')
+        .reply(404, simulatedEvent);
+  
+      const eventMonad = new EventMonad(await fetchValue(mockEventUrl));
+      const processedEvent = eventMonad.map(event => {
+        return { ...event, processed: true };
+      });
+      const either = await processedEvent.yield();
+      if (either.isFailure()) {
+        expect(either.error.message).toBe("Something unexpected");
+      }
+    });
+  });
+
+  describe('EventStream with Nock', () => {
+    const mockEventStreamUrl = 'http://stream.com/events';
+  
+    it('should receive event over EventStream', done => {
+      const simulatedEvent = 'data: {"type": "EVENT_RECEIVED", "payload": {"data": "event data"}}\n\n';
+  
+      nock('http://stream.com')
+        .get('/events')
+        .reply(200, simulatedEvent, { 'Content-Type': 'text/event-stream' });
+  
+      const eventSource = new EventSource(mockEventStreamUrl);
+      eventSource.onmessage = (event) => {
+        const eventData = JSON.parse(event.data);
+        const eventMonad = new EventMonad(eventData);
+        const processedEvent = eventMonad.map(e => {
+          return { ...e, processed: true };
+        });
+        processedEvent.yield().then(either => {
+          if (either.isSuccess()) {
+            expect(either.value.processed).toBe(true);
+          }
+          eventSource.close();
+          done();
+        });
+      };
+    });
+  });
 };
 
 describe("Monad Class Tests", () => {
   describe("Mock input tests", mockInputTests);
   describe("Basic Monad Tests", basicMonadTests);
   describe("Advanced Monad Tests", advancedMonadTests);
+  describe("Event Monad Tests", eventMonadTests);
 
   afterAll(() => {
     nock.restore();

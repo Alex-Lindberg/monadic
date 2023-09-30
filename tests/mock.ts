@@ -1,5 +1,6 @@
 /* eslint-disable */
 import axios from 'axios';
+import { Monad } from '../src/monad';
 export type RequestType = {
   name: string;
   async?: boolean;
@@ -20,6 +21,9 @@ export type RemappedType = {
   customer: { name: string; age: number };
   async?: boolean;
 };
+
+export type MyEvent = { type: string; payload: any };
+export type MyError = Error;
 
 export const verifyInput = (request: RequestType): VerifiedRequestType => {
   if (request.name) {
@@ -93,6 +97,21 @@ export async function* paginatedFetch(url: string, pages: number): AsyncIterable
     } catch (error) {
       throw new Error(`Failed to fetch page ${i}: ${error.message}`);
     }
+  }
+}
+
+export const fetchTransformedValue = async (item: number): Promise<number> => {
+  const response = await axios.get(`https://api.example.com/transform/${item}`);
+  return response.data.data; 
+};
+
+export const fetchValue = async (url: string): Promise<any> => {
+  try {
+    const response = await axios.get(url);
+    return response.data; 
+  }
+  catch (error) {
+    return Monad.fail(error)
   }
 }
 

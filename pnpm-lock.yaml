@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@types/eventsource': ^1.1.12
   '@types/jest': ^29.5.5
   '@types/node': ^20.7.0
   '@typescript-eslint/eslint-plugin': ^6.7.3
@@ -9,6 +10,7 @@ specifiers:
   eslint: ^8.50.0
   eslint-config-prettier: ^9.0.0
   eslint-plugin-prettier: ^5.0.0
+  eventsource: ^2.0.2
   jest: ^29.7.0
   nock: ^13.3.3
   prettier: ^3.0.3
@@ -18,6 +20,7 @@ specifiers:
   typescript: ^5.2.2
 
 devDependencies:
+  '@types/eventsource': 1.1.12
   '@types/jest': 29.5.5
   '@types/node': 20.7.1
   '@typescript-eslint/eslint-plugin': 6.7.3_ptdtxirkj6smbsapfa2xu7c5iq
@@ -26,6 +29,7 @@ devDependencies:
   eslint: 8.50.0
   eslint-config-prettier: 9.0.0_eslint@8.50.0
   eslint-plugin-prettier: 5.0.0_aqgyrhchy2rsdk3dpe2whc44ye
+  eventsource: 2.0.2
   jest: 29.7.0_w2ybvwh3tvydeavjcm4zlj56ta
   nock: 13.3.3
   prettier: 3.0.3
@@ -801,6 +805,10 @@ packages:
     resolution: {integrity: sha512-ojlGK1Hsfce93J0+kn3H5R73elidKUaZonirN33GSmgTUMpzI/MIFfSpF3haANe3G1bEBS9/9/QEqwTzwqFsKw==}
     dependencies:
       '@babel/types': 7.23.0
+    dev: true
+
+  /@types/eventsource/1.1.12:
+    resolution: {integrity: sha512-KlVguyxdoO8VkAhOMwOemK+NhFAg0gOwJHgimrWJUgM6LrdVW2nLa+d47WVWQcs8feRn0eeP+5yUDmDfzLBjRA==}
     dev: true
 
   /@types/graceful-fs/4.1.7:
@@ -1628,6 +1636,11 @@ packages:
   /esutils/2.0.3:
     resolution: {integrity: sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==}
     engines: {node: '>=0.10.0'}
+    dev: true
+
+  /eventsource/2.0.2:
+    resolution: {integrity: sha512-IzUmBGPR3+oUG9dUeXynyNmf91/3zUSJg1lCktzKw47OXuhco54U3r9B7O4XX+Rb1Itm9OZ2b0RkTs10bICOxA==}
+    engines: {node: '>=12.0.0'}
     dev: true
 
   /execa/5.1.1:
