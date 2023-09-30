@@ -1,65 +1,13 @@
-import {
-  Either,
-  Failure,
-  Success,
-  MatchCondition,
-  MatchOptions,
-  MatchMode,
-  NamedMonad,
-  RetryOptions,
-  FoldResult,
-  ErrorType,
-  HttpError,
-} from "./util";
+import { IMonad } from "./interfaces";
+import { Failure, Success } from "./util";
+import { Either, FoldResult, ErrorCriteria, MatchCondition, MatchOptions, MatchMode } from "./types";
 
-export class Monad<T, E = Error> {
+export class Monad<T, E = Error> implements IMonad<T, E> {
+  
   /**
    * @param value The value
    */
   constructor(private value: Promise<Either<T, E>>) {}
-
-  // ---- Static methods ----
-
-  /**
-   * Creates a new monad containing the value
-   *
-   * @param value The value
-   * @param error The error
-   * @returns {Monad<T, E>} A monad containing the value
-   *
-   * @template T The type of the value
-   * @template E The type of the error
-   * @example
-   * const monad = Monad.of(1); // monad contains 1
-   * const monad = Monad.of(1, new Error("Something went wrong")); // monad contains an error
-   *
-   */
-  static of<T, E = Error>(value: T, error?: E): Monad<T, E> {
-    if (error) {
-      return new Monad(Promise.resolve(new Failure(error)));
-    }
-    return new Monad(Promise.resolve(new Success(value)));
-  }
-
-  /**
-   * Creates a new monad containing the value
-   *
-   * @param promise The promise to wrap
-   * @returns {Monad<T, E>} A monad containing the value
-   *
-   * @template T The type of the value
-   * @template E The type of the error
-   * @example
-   * const monad = Monad.fromPromise(Promise.resolve(1)); // monad contains 1
-   * const monad = Monad.fromPromise(Promise.reject(new Error("Something went wrong"))); // monad contains an error
-   */
-  static fromPromise<T, E = Error>(promise: Promise<T>): Monad<T, E> {
-    return new Monad<T, E>(
-      promise
-        .then((value) => new Success(value) as Either<T, E>)
-        .catch((error) => new Failure(error as E) as Either<T, E>),
-    );
-  }
 
   /**
    * Creates a new promise that resolves to the value of the monad
@@ -74,200 +22,6 @@ export class Monad<T, E = Error> {
       either.isSuccess() ? Promise.resolve(either.value) : Promise.reject(either.error),
     );
   }
-
-  /**
-   * Creates a new monad that resolves to Failure
-   *
-   * @param error The error
-   * @returns {Monad<T, E>} A monad containing the error
-   *
-   * @template T The type of the value
-   * @template E The type of the error
-   * @example
-   * const monad = Monad.fail(new Error("Something went wrong")); // monad contains an error
-   */
-  static fail<T, E>(error: E): Monad<T, E> {
-    return new Monad(Promise.resolve(new Failure(error)));
-  }
-
-  /**
-   * Creates a new monad from an array of monads
-   *
-   * @param monads An array of monads
-   * @returns {Monad<T[], E>} A monad containing an array of values
-   *
-   * @template T The type of the value
-   * @template E The type of the error
-   * @example
-   * const monad1 = Monad.of(1);
-   * const monad2 = Monad.of(2);
-   * const monad12 = Monad.zip(monad1, monad2); // monad12 contains { 0: 1, 1: 2 }
-   */
-  static zip<T extends any[], E = Error>(monads: NamedMonad<T[number], E>[]): Monad<{ [key: string]: T[number] }, E>;
-  /**
-   * Creates a new monad from an array of monads
-   *
-   * @param monads Multiple arrays of monads
-   * @returns {Monad<T[], E>} A monad containing an array of values
-   *
-   * @template T The type of the value
-   * @template E The type of the error
-   * @example
-   * const monad1 = Monad.of(1);
-   * const monad2 = Monad.of(2);
-   * const monad123 = Monad.zip([monad1, monad2]); // monad123 contains { 0: 1, 1: 2 }
-   */
-  static zip<T extends any[], E = Error>(...monads: NamedMonad<T[number], E>[]): Monad<{ [key: string]: T[number] }, E>;
-  /**
-   * Creates a new monad from multiple values
-   *
-   * @param monads Either an array of monads or multiple arrays of monads
-   * @returns {Monad<T[], E>} A monad containing an array of values
-   *
-   * @template T The type of the value
-   * @template E The type of the error
-   * @example
-   * const monad123 = Monad.zip(1, 2, 3); // monad123 contains { 0: 1, 1: 2, 2: 3 }
-   */
-  static zip<T extends any[], E = Error>(...monads: any[]): Monad<{ [key: string]: T[number] }, E> {
-    const monadArray = Array.isArray(monads[0]) ? [...monads[0]] : monads;
-    return new Monad(
-      Promise.all(monadArray.map((m: NamedMonad<T[number], E>) => m.monad.yield())).then((results) => {
-        let error: E | null = null;
-        const combinedValue = results.reduce(
-          (acc, result, i) => {
-            const key = monadArray[i].name || `m${i}`;
-            if (result.isSuccess()) acc[key] = result.value;
-            else if (error === null) error = result.error;
-            return acc;
-          },
-          {} as { [key: string]: T[number] },
-        );
-        if (error) {
-          return new Failure(error);
-        }
-        return new Success(combinedValue);
-      }),
-    );
-  }
-
-  /**
-   * Retries an operation a number of times
-   *
-   * @param operationFn A function that returns a monad
-   * @param options Options for the retry operation, @see RetryOptions
-   * @returns {Monad<T, E>} A monad containing the result of the operation
-   *
-   * @template T The type of the value
-   * @template E The type of the error
-   * @example
-   * const monad = Monad.retry(() => Monad.of(1), { times: 3 }); // monad contains 1
-   * const monad = Monad.retry(() => Monad.fail(new Error("Something went wrong")), { times: 3 }); // monad contains an error
-   */
-  static retry<T, E = Error>(operationFn: () => Monad<T, E>, options: RetryOptions<E>): Monad<T, E> {
-    const { times = 1, delay = 1000, backoffFactor = 1, onError } = options;
-    const retryOperation = async (retriesLeft: number, currentDelay: number): Promise<Either<T, E>> => {
-      const operation = operationFn();
-      const result = await operation.yield();
-      if (result.isSuccess() || retriesLeft <= 0) return result;
-      if (onError && result.error) onError(result.error, times - retriesLeft);
-      // Artificially delay the retry
-      await new Promise((resolve) => setTimeout(resolve, currentDelay));
-
-      return retryOperation(retriesLeft - 1, currentDelay * backoffFactor);
-    };
-    return new Monad(retryOperation(times, delay));
-  }
-
-  /**
-   * Sets a timeout for an operation
-   *
-   * @param operation A function that returns a monad
-   * @param duration  The duration of the timeout in milliseconds
-   * @param timeoutError The error to return if the timeout is reached
-   * @returns  {Monad<T, E>} A monad containing the result of the operation
-   *
-   * @template T The type of the value
-   * @template E The type of the error
-   * @example
-   * const monad = Monad.timeout(() => Monad.of(1), 1000, new Error("Timeout")); // monad contains 1
-   * const monad = Monad.timeout(() => Monad.fail(new Error("Something went wrong")), 1000, new Error("Timeout")); // monad contains an error
-   */
-  static timeout<T, E = Error>(
-    operation: (abortSignal?: AbortSignal) => Monad<T, E>,
-    duration: number,
-    timeoutError: E,
-  ): Monad<T, E> {
-    return new Monad<T, E>(
-      new Promise<Either<T, E>>((resolve) => {
-        const abortController = new AbortController();
-        let isAbortSupported = true;
-
-        const timer = setTimeout(() => {
-          if (isAbortSupported) {
-            abortController.abort();
-          }
-          resolve(new Failure(timeoutError));
-        }, duration);
-        operation(abortController.signal)
-          .yield()
-          .then((result) => {
-            if (result.isSuccess()) {
-              clearTimeout(timer);
-              resolve(result);
-            } else if (result.error instanceof DOMException && result.error.name === "AbortError") {
-              isAbortSupported = false;
-              // Let the timeout handler take care of this
-            } else {
-              clearTimeout(timer);
-              resolve(result);
-            }
-          })
-          .catch((error) => {
-            clearTimeout(timer);
-            resolve(new Failure(error));
-          });
-      }),
-    );
-  }
-
-  /**
-   * Measures the execution time of an operation
-   *
-   * @param operation  The operation to measure
-   * @param logger A logger to log the result of the operation, @default console.log
-   * @param transformer A function that transforms the result of the operation into a log message, @default (duration, result) => `Execution took ${duration.toFixed(2)}ms - Error: ${result.error}`
-   * @returns {Promise<Either<T, E>>} A promise that resolves to the result of the operation
-   *
-   * @template T The type of the value
-   * @template E The type of the error
-   * @template L The type of the logger
-   * @example
-   * const monad = Monad.timeExecution(() => Monad.of(1)); // monad contains 1
-   * const monad = Monad.timeExecution(() => Monad.fail(new Error("Something went wrong"))); // monad contains an error
-   */
-  static async timeExecution<T, E = Error, L = Console>(
-    operation: () => Monad<T, E>,
-    logger: L,
-    transformer?: (duration: number, result: Either<T, E>) => string,
-  ): Promise<Either<T, E>> {
-    const startTime = performance.now();
-    const result = await operation().yield();
-    const endTime = performance.now();
-    const duration = endTime - startTime;
-
-    let message = `Execution took ${duration.toFixed(2)}ms`;
-    if (transformer) {
-      message = transformer(duration, result);
-    } else if (!result.isSuccess()) {
-      message += ` - Error: ${result.error}`; // Include error information in the log message
-    }
-    if (logger && typeof (logger as any).log === "function") (logger as any).log(message);
-    else console.log(message);
-    return result;
-  }
-
-  // ---- Instance methods ----
 
   /**
    * Maps the value of the monad to a new value. If the value is a promise, it will be awaited.
@@ -393,7 +147,7 @@ export class Monad<T, E = Error> {
    *  - mode: @default MatchMode.FIRST
    *  - continueOnError: @default false
    * @returns {Monad<T, E>} A monad containing the result of the action
-   * 
+   *
    * @example
    * const monad = Monad.of(1);
    * const matchedMonad = monad.match([
@@ -441,11 +195,11 @@ export class Monad<T, E = Error> {
 
   /**
    * Filters the value of the monad. If the value is a promise, it will be awaited.
-   * 
+   *
    * @param predicate The predicate function, @see Array.filter
    * @param errorFn A function that returns the error to use if the predicate returns false
    * @returns {Monad<T, E>} A monad containing the filtered value
-   * 
+   *
    * @template E2 The type of the error
    * @example
    * const monad = Monad.of(1);
@@ -475,12 +229,12 @@ export class Monad<T, E = Error> {
 
   /**
    * Returns the value of the input monad if it is a success, otherwise throws the error.
-   * Used to allow side effects outside of the monad. 
+   * Used to allow side effects outside of the monad.
    * The returned monad will contain the same value as the input monad.
-   * 
+   *
    * @param fn The function to execute
    * @returns {Monad<T, E>} A monad containing the value
-   * 
+   *
    * @template E2 The type of the error
    * @example
    * const monad = Monad.of(1);
@@ -502,11 +256,11 @@ export class Monad<T, E = Error> {
   /**
    * Fold the value of the monad into a new value. If the value is a promise, it will be awaited.
    * If the value is a failure, the error will be propagated. If the mapping function throws an error,
-   * 
+   *
    * @param onSuccess The function to execute if the monad is a success
    * @param onFailure The function to execute if the monad is a failure
    * @returns {Promise<FoldResult<U>>} A promise that resolves to the result of the fold operation, @see FoldResult
-   * 
+   *
    * @template U The type of the result
    * @example
    * const monad = Monad.of(1);
@@ -527,11 +281,11 @@ export class Monad<T, E = Error> {
   /**
    * Logs the value of the monad to the console. If the value is a promise, it will be awaited.
    * If the value is a failure, the error will be propagated. If the mapping function throws an error,
-   * 
+   *
    * @param logger The logger to use, @default console
    * @param transformer A function that transforms the value of the monad into a log message, @default either => either.isSuccess() ? `Success: ${either.value}` : `Error: ${either.error}`
    * @returns {Monad<T, E>} A monad containing the value
-   * 
+   *
    * @template L The type of the logger
    * @example
    * const monad = Monad.of(1);
@@ -557,45 +311,23 @@ export class Monad<T, E = Error> {
     );
   }
 
-  /**
-   * Handles specific errors. If the value is a promise, it will be awaited.
-   * 
-   * @param errorTypes An array of error types to handle
-   * @param handler A function that returns a monad
-   * @returns {Monad<T, E>} A monad containing the value
-   * 
-   * @example
-   * const monad = Monad.of(1);
-   * const value = await monad.handleSpecificErrors([Error], error => Monad.of(2)); // value === 1
-   */
-  handleSpecificErrors(errorTypes: ErrorType[], handler: (error: E) => Monad<T, E>): Monad<T, E> {
+  handleErrors(criteria: ErrorCriteria, handler: (error: E) => Monad<T, E>): Monad<T, E> {
     return new Monad(
-      this.value.then((either) =>
-        !either.isSuccess() && errorTypes.some((type) => either.error instanceof type)
-          ? handler(either.error).yield()
-          : either,
-      ),
-    );
-  }
+      this.value.then((either) => {
+        if (either.isSuccess()) return either;
+        const error = either.error;
 
-  /**
-   * Handles http errors. If the value is a promise, it will be awaited.
-   * 
-   * @param statusCodes An array of status codes to handle
-   * @param handler A function that returns a monad
-   * @returns {Monad<T, E>} A monad containing the value
-   * 
-   * @example
-   * const monad = Monad.of(1);
-   * const value = await monad.handleHttpErrors([404], error => Monad.of(2)); // value === 1
-   */
-  handleHttpErrors(statusCodes: number[], handler: (error: HttpError) => Monad<T, E>): Monad<T, E> {
-    return new Monad(
-      this.value.then((either) =>
-        !either.isSuccess() && either.error instanceof HttpError && statusCodes.includes(either.error.statusCode)
-          ? handler(either.error).yield()
-          : either,
-      ),
+        const statusMatch =
+          !criteria.statusCodes ||
+          (error.hasOwnProperty("statusCode") && criteria.statusCodes.includes((error as any).statusCode));
+        const messageMatch =
+          !criteria.messages || ("message" in (error as any) && criteria.messages.includes((error as any).message));
+        const typeMatch = !criteria.types || criteria.types.some((type) => error instanceof type);
+        if (statusMatch && messageMatch && typeMatch) {
+          return handler(error).yield();
+        }
+        return either;
+      }),
     );
   }
 

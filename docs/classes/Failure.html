@@ -39,7 +39,7 @@
 <ul class="tsd-hierarchy">
 <li><span class="target">Failure</span></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/058a292/src/util.ts#L31">util.ts:31</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/a5baaaf/src/util.ts#L40">util.ts:40</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -55,7 +55,8 @@
 </div></section>
 <section class="tsd-index-section">
 <h3 class="tsd-index-heading">Methods</h3>
-<div class="tsd-index-list"><a href="Failure.html#isSuccess" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>is<wbr/>Success</span></a>
+<div class="tsd-index-list"><a href="Failure.html#isFailure" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>is<wbr/>Failure</span></a>
+<a href="Failure.html#isSuccess" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>is<wbr/>Success</span></a>
 </div></section></div></details></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Constructors</h2>
@@ -78,28 +79,40 @@
 <h5><span class="tsd-kind-parameter">error</span>: <span class="tsd-signature-type tsd-kind-type-parameter">E</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Failure.html" class="tsd-signature-type tsd-kind-class">Failure</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/058a292/src/util.ts#L32">util.ts:32</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/a5baaaf/src/util.ts#L41">util.ts:41</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member"><a id="error" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>error</span><a href="#error" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">error</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type tsd-kind-type-parameter">E</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/058a292/src/util.ts#L32">util.ts:32</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/a5baaaf/src/util.ts#L41">util.ts:41</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
+<section class="tsd-panel tsd-member"><a id="isFailure" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>is<wbr/>Failure</span><a href="#isFailure" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="tsd-signature tsd-anchor-link" id="isFailure.isFailure-1"><span class="tsd-kind-call-signature">is<wbr/>Failure</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-kind-parameter">this</span><span class="tsd-signature-symbol"> is </span><a href="Failure.html" class="tsd-signature-type tsd-kind-class">Failure</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span><a href="#isFailure.isFailure-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Returns true if the value is a failure</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-kind-parameter">this</span><span class="tsd-signature-symbol"> is </span><a href="Failure.html" class="tsd-signature-type tsd-kind-class">Failure</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span></h4><p>true if the value is a failure</p>
+
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/a5baaaf/src/util.ts#L55">util.ts:55</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="isSuccess" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>is<wbr/>Success</span><a href="#isSuccess" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
 <li class="tsd-signature tsd-anchor-link" id="isSuccess.isSuccess-1"><span class="tsd-kind-call-signature">is<wbr/>Success</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-kind-parameter">this</span><span class="tsd-signature-symbol"> is </span><a href="Success.html" class="tsd-signature-type tsd-kind-class">Success</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span><a href="#isSuccess.isSuccess-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Returns true if the value is a failure</p>
+<div class="tsd-comment tsd-typography"><p>Returns false if the value is a failure</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-kind-parameter">this</span><span class="tsd-signature-symbol"> is </span><a href="Success.html" class="tsd-signature-type tsd-kind-class">Success</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span></h4><p>true if the value is a failure</p>
 
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/058a292/src/util.ts#L38">util.ts:38</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/a5baaaf/src/util.ts#L47">util.ts:47</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -121,17 +134,19 @@
 <ul>
 <li><a href="#constructor" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-512"></use></svg><span>constructor</span></a></li>
 <li><a href="#error" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>error</span></a></li>
+<li><a href="#isFailure" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>is<wbr/>Failure</span></a></li>
 <li><a href="#isSuccess" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>is<wbr/>Success</span></a></li></ul></div></details></div>
 <div class="site-menu">
 <nav class="tsd-navigation"><a href="../modules.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1"></use></svg><span>monadic</span></a>
 <ul class="tsd-small-nested-navigation" id="tsd-nav-container" data-base="..">
 <li><a href="../enums/MatchMode.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-8"></use></svg>MatchMode</a></li>
 <li><a href="Failure.html" class="current"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>Failure</a></li>
-<li><a href="HttpError.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>HttpError</a></li>
 <li><a href="Monad.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>Monad</a></li>
 <li><a href="Success.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>Success</a></li>
+<li><a href="Util.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-128"></use></svg>Util</a></li>
+<li><a href="../interfaces/IMonad.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg>IMonad</a></li>
 <li><a href="../types/Either.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>Either</a></li>
-<li><a href="../types/ErrorType.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>ErrorType</a></li>
+<li><a href="../types/ErrorCriteria.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>ErrorCriteria</a></li>
 <li><a href="../types/FoldResult.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>FoldResult</a></li>
 <li><a href="../types/MatchCondition.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>MatchCondition</a></li>
 <li><a href="../types/MatchOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2097152"></use></svg>MatchOptions</a></li>
