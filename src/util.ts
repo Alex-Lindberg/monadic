@@ -49,7 +49,7 @@ class Failure<T, E> {
   }
   /**
    * Returns true if the value is a failure
-   * 
+   *
    * @returns {boolean} true if the value is a failure
    */
   isFailure(): this is Failure<T, E> {
@@ -282,8 +282,4 @@ class Util {
   }
 }
 
-export {
-  Success,
-  Failure,
-  Util,
-};
+export { Success, Failure, Util };

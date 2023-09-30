@@ -3,7 +3,6 @@ import { Failure, Success } from "./util";
 import { Either, FoldResult, ErrorCriteria, MatchCondition, MatchOptions, MatchMode } from "./types";
 
 export class Monad<T, E = Error> implements IMonad<T, E> {
-  
   /**
    * @param value The value
    */
@@ -211,12 +210,12 @@ export class Monad<T, E = Error> implements IMonad<T, E> {
    */
   filter<E2 = E>(
     predicate: (value: T) => boolean | Promise<boolean>,
-    errorFn: (value: T) => E2 = () => "Value did not satisfy the predicate" as any as E2,
+    errorFn: (value: T) => E2 = () => "Value did not satisfy the predicate" as E2,
   ): Monad<T, E | E2> {
     return new Monad<T, E | E2>(
       this.value.then(async (either) => {
         if (!either.isSuccess()) return either;
-        let satisfiesPredicate: any;
+        let satisfiesPredicate: boolean | void;
         try {
           satisfiesPredicate = await predicate(either.value);
         } catch (error) {
@@ -278,6 +277,9 @@ export class Monad<T, E = Error> implements IMonad<T, E> {
     }
   }
 
+  private defaultLogTransformer<V>(either: Either<T, E>): V {
+    return either.isSuccess() ? (`Success: ${either.value}` as V) : (`Error: ${either.error}` as V);
+  }
   /**
    * Logs the value of the monad to the console. If the value is a promise, it will be awaited.
    * If the value is a failure, the error will be propagated. If the mapping function throws an error,
@@ -293,15 +295,14 @@ export class Monad<T, E = Error> implements IMonad<T, E> {
    * const monad = Monad.fail(new Error("Something went wrong"));
    * const value = await monad.log(); // value === an error
    */
-  log<L = Console>(
+  log<V = String, L = Console>(
     logger?: L,
-    transformer: (either: Either<T, E>) => any = (either) =>
-      either.isSuccess() ? `Success: ${either.value}` : `Error: ${either.error}`,
+    transformer: (either: Either<T, E>) => V = (either) => this.defaultLogTransformer<V>(either),
   ): Monad<T, E> {
     return new Monad(
       this.value.then((either) => {
         // Pass the value to the logger if it has a log method
-        if (logger && typeof (logger as any).log === "function") {
+        if (logger && typeof (logger as any)?.log === "function") {
           (logger as any).log(transformer(either));
         } else {
           console.log(transformer(either));
@@ -319,9 +320,10 @@ export class Monad<T, E = Error> implements IMonad<T, E> {
 
         const statusMatch =
           !criteria.statusCodes ||
-          (error.hasOwnProperty("statusCode") && criteria.statusCodes.includes((error as any).statusCode));
+          (Object.prototype.hasOwnProperty.call(error, "statusCode") &&
+            criteria.statusCodes.includes((error as any)?.statusCode));
         const messageMatch =
-          !criteria.messages || ("message" in (error as any) && criteria.messages.includes((error as any).message));
+          !criteria.messages || ("message" in (error as any) && criteria.messages.includes((error as any)?.message));
         const typeMatch = !criteria.types || criteria.types.some((type) => error instanceof type);
         if (statusMatch && messageMatch && typeMatch) {
           return handler(error).yield();

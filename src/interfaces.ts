@@ -1,9 +1,9 @@
-import { Either, ErrorCriteria, FoldResult, MatchCondition, MatchOptions, NamedMonad, RetryOptions } from "./types";
+import { Either, ErrorCriteria, FoldResult, MatchCondition, MatchOptions } from "./types";
 
 /**
  * Interface for core monad functionality
  * @interface IMonad
- * 
+ *
  * @template T The type of the value
  * @template E The type of the error
  */
@@ -19,7 +19,7 @@ export interface IMonad<T, E> {
   filter<E2 = E>(predicate: (value: T) => boolean | Promise<boolean>, errorFn?: (value: T) => E2): IMonad<T, E | E2>;
   tap(fn: (value: T) => T | void | Promise<void>): IMonad<T, E>;
   fold<U>(onSuccess: (value: T) => U, onFailure: (error: E) => U): Promise<FoldResult<U>>;
-  log<L = Console>(logger?: L, transformer?: (either: Either<T, E>) => any): IMonad<T, E>;
+  log<V = String, L = Console>(logger?: L, transformer?: (either: Either<T, E>) => V): IMonad<T, E>;
   handleErrors(criteria: ErrorCriteria, handler: (error: E) => IMonad<T, E>): IMonad<T, E>;
   toPromise(): Promise<T>;
   yield(): Promise<Either<T, E>>;
