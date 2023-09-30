@@ -1,4 +1,5 @@
 /* eslint-disable */
+import axios from 'axios';
 export type RequestType = {
   name: string;
   async?: boolean;
@@ -81,4 +82,17 @@ export class OtherError extends Error {
 
 export const errorHandler = (error: Error): void => {
   console.error(error.message);
+};
+
+
+export async function* paginatedFetch(url: string, pages: number): AsyncIterable<any[]> {
+  for (let i = 1; i <= pages; i++) {
+    try {
+      const response = await axios.get(`${url}?page=${i}`);
+      yield response.data;
+    } catch (error) {
+      throw new Error(`Failed to fetch page ${i}: ${error.message}`);
+    }
+  }
 }
+

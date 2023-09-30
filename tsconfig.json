@@ -10,8 +10,8 @@
     "declarationMap": true,
     "outDir": "dist"
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "**/*.test.ts", "**/*.spec.ts", "src/mock.ts"],
+  "include": ["src/**/*", "tests/mock.ts"],
+  "exclude": ["node_modules", "**/*.test.ts", "**/*.spec.ts", "**/mock.ts"],
   "types": ["src/contextMonad.d.ts"],
   "lib": ["es2015"]
 }

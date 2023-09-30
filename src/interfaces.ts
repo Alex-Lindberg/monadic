@@ -9,9 +9,6 @@ import { Either, ErrorCriteria, FoldResult, MatchCondition, MatchOptions } from 
  */
 export interface IMonad<T, E> {
   map<U>(fn: (value: T) => U): IMonad<U, E>;
-  flatMap<U>(fn: (value: T) => IMonad<U, E> | Promise<U>): IMonad<U, E>;
-  recover(fn: (error: E) => T): IMonad<T, E>;
-  map<U>(fn: (value: T) => U): IMonad<U, E>;
   flatMap<U>(fn: (value: T) => U | Promise<U> | IMonad<U, E>): IMonad<U, E>;
   recover(fn: (error: E) => T): IMonad<T, E>;
   orElse(alternative: IMonad<T, E> | ((error: E) => IMonad<T, E>)): IMonad<T, E>;
@@ -24,3 +21,13 @@ export interface IMonad<T, E> {
   toPromise(): Promise<T>;
   yield(): Promise<Either<T, E>>;
 }
+
+export interface IAsyncIterableMonad<T, E> extends IMonad<T[], E> {
+  forEachAsync(callback: (value: T) => Promise<void> | void): Promise<void>;
+  // other methods
+  // toArray(): Promise<T[]>;
+  // mapAsync<U>(callback: (value: T) => Promise<U> | U): IAsyncIterableMonad<U, E>;
+  // filterAsync(predicate: (value: T) => Promise<boolean> | boolean): IAsyncIterableMonad<T, E>;
+  // ... additional async methods
+}
+

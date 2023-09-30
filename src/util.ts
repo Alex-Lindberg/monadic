@@ -1,3 +1,4 @@
+import { IAsyncIterableMonad, IMonad } from "./interfaces";
 import { Monad } from "./monad";
 import { Either, NamedMonad, RetryOptions } from "./types";
 
@@ -89,20 +90,7 @@ class Util {
     );
   }
 
-  /**
-   * Creates a new monad that resolves to Failure
-   *
-   * @param error The error
-   * @returns {Monad<T, E>} A monad containing the error
-   *
-   * @template T The type of the value
-   * @template E The type of the error
-   * @example
-   * const monad = Monad.fail(new Error("Something went wrong")); // monad contains an error
-   */
-  static fail<T, E>(error: E): Monad<T, E> {
-    return new Monad(Promise.resolve(new Failure(error)));
-  }
+  
 
   /**
    * Creates a new monad from an array of monads
@@ -280,6 +268,59 @@ class Util {
     else console.log(message);
     return result;
   }
+
+  static async fromAsyncIterable<T, E = Error>(
+    asyncIterableFn: () => AsyncIterable<T>,
+    transformError?: (error: unknown) => E,
+  ): Promise<Monad<T[], E>> {
+    return new Monad<T[], E>(
+      (async () => {
+        try {
+          const items: T[] = [];
+          for await (const item of asyncIterableFn()) {
+            items.push(item);
+          }
+          return new Success<T[], E>(items);
+        } catch (error) {
+          return new Failure<T[], E>(transformError ? transformError(error) : (error as E));
+        }
+      })(),
+    );
+  }
 }
+
+export const toAsyncIterableMonad = <T, E>(monad: IMonad<T[], E>): IAsyncIterableMonad<T, E> => {
+  const forEachAsync = async (callback: (value: T) => Promise<void> | void): Promise<void> => {
+    const either = await monad.yield();
+    if (either.isSuccess()) {
+      const values: T[] = either.value;
+      for (const value of values) {
+        await callback(value);
+      }
+    } else {
+      throw either.error; 
+    }
+  };
+  return {
+    ...monad,
+    forEachAsync,
+  };
+};
+
+
+  // const mapAsync = (callback: (value: T) => Promise<T> | T): IAsyncIterableMonad<T, E> => {
+  //     return toAsyncIterableMonad(monad.map((values) => values.map(callback)));
+  // };
+  // const filterAsync = (predicate: (value: T) => Promise<boolean> | boolean): IAsyncIterableMonad<T, E> => {
+  //     return toAsyncIterableMonad(monad.map((values) => values.filter(predicate)));
+  // };
+  // const toArray = async (): Promise<T[]> => {
+  //     const either = await monad.yield();
+  //     if (either.isSuccess()) {
+  //         return either.value;
+  //     } else {
+  //         throw either.error; // Handle error or rethrow
+  //     }
+  // };
 
 export { Success, Failure, Util };
