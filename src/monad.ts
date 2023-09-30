@@ -9,6 +9,60 @@ export class Monad<T, E = Error> implements IMonad<T, E> {
   constructor(private value: Promise<Either<T, E>>) {}
 
   /**
+   * Creates a new monad containing the value
+   *
+   * @param value The value
+   * @param error The error
+   * @returns {Monad<T, E>} A monad containing the value
+   *
+   * @template T The type of the value
+   * @template E The type of the error,
+   * @example
+   * const monad = Monad.of(1);
+   */
+  static of<T, E = Error>(value: T, error?: E): Monad<T, E> {
+    if (error) {
+      return new Monad(Promise.resolve(new Failure(error)));
+    }
+    return new Monad(Promise.resolve(new Success(value)));
+  }
+
+  /**
+   * Creates a new monad that resolves to Failure
+   *
+   * @param error The error
+   * @returns {Monad<T, E>} A monad containing the error
+   *
+   * @template T The type of the value
+   * @template E The type of the error
+   * @example
+   * const monad = Monad.fail(new Error("Something went wrong")); // monad contains an error
+   */
+  static fail<T, E>(error: E): Monad<T, E> {
+    return new Monad(Promise.resolve(new Failure(error)));
+  }
+
+  /**
+   * Creates a new monad containing the value
+   *
+   * @param promise The promise to wrap
+   * @returns {Monad<T, E>} A monad containing the value
+   *
+   * @template T The type of the value
+   * @template E The type of the error
+   * @example
+   * const monad = Monad.fromPromise(Promise.resolve(1)); // monad contains 1
+   * const monad = Monad.fromPromise(Promise.reject(new Error("Something went wrong"))); // monad contains an error
+   */
+  static fromPromise<T, E = Error>(promise: Promise<T>): Monad<T, E> {
+    return new Monad<T, E>(
+      promise
+        .then((value) => new Success(value) as Either<T, E>)
+        .catch((error) => new Failure(error as E) as Either<T, E>),
+    );
+  }
+
+  /**
    * Creates a new promise that resolves to the value of the monad
    *
    * @returns {Promise<T>} A promise that resolves to the value of the monad
