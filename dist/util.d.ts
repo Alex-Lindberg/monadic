@@ -157,5 +157,5 @@ declare class Util {
      */
     static timeExecution<T, E = Error, L = Console>(operation: () => Monad<T, E>, logger: L, transformer?: (duration: number, result: Either<T, E>) => string): Promise<Either<T, E>>;
 }
-export { Success, Failure, Util, };
+export { Success, Failure, Util };
 //# sourceMappingURL=util.d.ts.map

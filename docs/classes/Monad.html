@@ -42,7 +42,7 @@
 <ul class="tsd-hierarchy">
 <li><a href="../interfaces/IMonad.html" class="tsd-signature-type tsd-kind-interface">IMonad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/a5baaaf/src/monad.ts#L5">monad.ts:5</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/ab7b367/src/monad.ts#L5">monad.ts:5</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -58,7 +58,8 @@
 </div></section>
 <section class="tsd-index-section">
 <h3 class="tsd-index-heading">Methods</h3>
-<div class="tsd-index-list"><a href="Monad.html#filter" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>filter</span></a>
+<div class="tsd-index-list"><a href="Monad.html#defaultLogTransformer" class="tsd-index-link tsd-is-private"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>default<wbr/>Log<wbr/>Transformer</span></a>
+<a href="Monad.html#filter" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>filter</span></a>
 <a href="Monad.html#flatMap" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>flat<wbr/>Map</span></a>
 <a href="Monad.html#fold" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>fold</span></a>
 <a href="Monad.html#handleErrors" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>handle<wbr/>Errors</span></a>
@@ -96,7 +97,7 @@
 <h4 class="tsd-returns-title">Returns <a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span></h4>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/a5baaaf/src/monad.ts#L10">monad.ts:10</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/ab7b367/src/monad.ts#L9">monad.ts:9</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-is-private"><a id="value" class="tsd-anchor"></a>
@@ -106,9 +107,27 @@
 </div>
 <div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/a5baaaf/src/monad.ts#L10">monad.ts:10</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/ab7b367/src/monad.ts#L9">monad.ts:9</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
+<section class="tsd-panel tsd-member tsd-is-private"><a id="defaultLogTransformer" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>default<wbr/>Log<wbr/>Transformer</span><a href="#defaultLogTransformer" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-is-private">
+<li class="tsd-signature tsd-anchor-link" id="defaultLogTransformer.defaultLogTransformer-1"><span class="tsd-kind-call-signature">default<wbr/>Log<wbr/>Transformer</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">either</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type tsd-kind-type-parameter">V</span><a href="#defaultLogTransformer.defaultLogTransformer-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-description">
+<section class="tsd-panel">
+<h4>Type Parameters</h4>
+<ul class="tsd-type-parameter-list">
+<li>
+<h4><span class="tsd-kind-type-parameter">V</span></h4></li></ul></section>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><span class="tsd-kind-parameter">either</span>: <a href="../types/Either.html" class="tsd-signature-type tsd-kind-type-alias">Either</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span></h5></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type tsd-kind-type-parameter">V</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/ab7b367/src/monad.ts#L280">monad.ts:280</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="filter" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>filter</span><a href="#filter" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -169,7 +188,7 @@
 </div><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/IMonad.html">IMonad</a>.<a href="../interfaces/IMonad.html#filter">filter</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/a5baaaf/src/monad.ts#L212">monad.ts:212</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/ab7b367/src/monad.ts#L211">monad.ts:211</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="flatMap" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>flat<wbr/>Map</span><a href="#flatMap" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -215,7 +234,7 @@ it will be awaited. If the mapping function throws an error, the error will be p
 </div><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/IMonad.html">IMonad</a>.<a href="../interfaces/IMonad.html#flatMap">flatMap</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/a5baaaf/src/monad.ts#L71">monad.ts:71</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/ab7b367/src/monad.ts#L70">monad.ts:70</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="fold" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>fold</span><a href="#fold" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -277,7 +296,7 @@ If the value is a failure, the error will be propagated. If the mapping function
 </div><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/IMonad.html">IMonad</a>.<a href="../interfaces/IMonad.html#fold">fold</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/a5baaaf/src/monad.ts#L271">monad.ts:271</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/ab7b367/src/monad.ts#L270">monad.ts:270</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="handleErrors" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>handle<wbr/>Errors</span><a href="#handleErrors" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -304,11 +323,11 @@ If the value is a failure, the error will be propagated. If the mapping function
 <h4 class="tsd-returns-title">Returns <a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/IMonad.html">IMonad</a>.<a href="../interfaces/IMonad.html#handleErrors">handleErrors</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/a5baaaf/src/monad.ts#L314">monad.ts:314</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/ab7b367/src/monad.ts#L315">monad.ts:315</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="log" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>log</span><a href="#log" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
-<li class="tsd-signature tsd-anchor-link" id="log.log-1"><span class="tsd-kind-call-signature">log</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">L</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">logger</span><span class="tsd-signature-symbol">?</span>, <span class="tsd-kind-parameter">transformer</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span><a href="#log.log-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="log.log-1"><span class="tsd-kind-call-signature">log</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">V</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">L</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">logger</span><span class="tsd-signature-symbol">?</span>, <span class="tsd-kind-parameter">transformer</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span><a href="#log.log-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Logs the value of the monad to the console. If the value is a promise, it will be awaited.
 If the value is a failure, the error will be propagated. If the mapping function throws an error,</p>
@@ -316,6 +335,8 @@ If the value is a failure, the error will be propagated. If the mapping function
 <section class="tsd-panel">
 <h4>Type Parameters</h4>
 <ul class="tsd-type-parameter-list">
+<li>
+<h4><span class="tsd-kind-type-parameter">V</span> = <span class="tsd-signature-type">string</span></h4></li>
 <li>
 <h4><span class="tsd-kind-type-parameter">L</span> = <span class="tsd-signature-type ">Console</span></h4>
 <div class="tsd-comment tsd-typography"><p>The type of the logger</p>
@@ -330,21 +351,21 @@ If the value is a failure, the error will be propagated. If the mapping function
 </div>
 <div class="tsd-comment tsd-typography"></div></li>
 <li>
-<h5><span class="tsd-kind-parameter">transformer</span>: <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">either</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> = ...</span></h5>
+<h5><span class="tsd-kind-parameter">transformer</span>: <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">either</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type tsd-kind-type-parameter">V</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> = ...</span></h5>
 <div class="tsd-comment tsd-typography"><p>A function that transforms the value of the monad into a log message,</p>
 </div>
 <div class="tsd-comment tsd-typography"></div>
 <ul class="tsd-parameters">
 <li class="tsd-parameter-signature">
 <ul class="tsd-signatures">
-<li class="tsd-signature"><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">either</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+<li class="tsd-signature"><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">either</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type tsd-kind-type-parameter">V</span></li>
 <li class="tsd-description">
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li>
 <h5><span class="tsd-kind-parameter">either</span>: <a href="../types/Either.html" class="tsd-signature-type tsd-kind-type-alias">Either</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span></h5></li></ul></div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4></li></ul></li></ul></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type tsd-kind-type-parameter">V</span></h4></li></ul></li></ul></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="Monad.html" class="tsd-signature-type tsd-kind-class">Monad</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type tsd-kind-type-parameter">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type tsd-kind-type-parameter">E</span><span class="tsd-signature-symbol">&gt;</span></h4><p>A monad containing the value</p>
 
 <div class="tsd-comment tsd-typography">
@@ -358,7 +379,7 @@ If the value is a failure, the error will be propagated. If the mapping function
 </div><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/IMonad.html">IMonad</a>.<a href="../interfaces/IMonad.html#log">log</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/a5baaaf/src/monad.ts#L296">monad.ts:296</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/ab7b367/src/monad.ts#L298">monad.ts:298</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="map" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>map</span><a href="#map" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -403,7 +424,7 @@ the error will be propagated as a failure.</p>
 </div><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/IMonad.html">IMonad</a>.<a href="../interfaces/IMonad.html#map">map</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/a5baaaf/src/monad.ts#L41">monad.ts:41</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/ab7b367/src/monad.ts#L40">monad.ts:40</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="match" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>match</span><a href="#match" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -447,7 +468,7 @@ If continueOnError is true, the monad is returned if an error occurs during the 
 </div><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/IMonad.html">IMonad</a>.<a href="../interfaces/IMonad.html#match">match</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/a5baaaf/src/monad.ts#L158">monad.ts:158</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/ab7b367/src/monad.ts#L157">monad.ts:157</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="orElse" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>or<wbr/>Else</span><a href="#orElse" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -472,7 +493,7 @@ Works similarly to recover, but the alternative value can be a monad.</p>
 </div><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/IMonad.html">IMonad</a>.<a href="../interfaces/IMonad.html#orElse">orElse</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/a5baaaf/src/monad.ts#L129">monad.ts:129</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/ab7b367/src/monad.ts#L128">monad.ts:128</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="recover" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>recover</span><a href="#recover" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -507,7 +528,7 @@ Works similarly to recover, but the alternative value can be a monad.</p>
 </div><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/IMonad.html">IMonad</a>.<a href="../interfaces/IMonad.html#recover">recover</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/a5baaaf/src/monad.ts#L109">monad.ts:109</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/ab7b367/src/monad.ts#L108">monad.ts:108</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="tap" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>tap</span><a href="#tap" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -544,7 +565,7 @@ The returned monad will contain the same value as the input monad.</p>
 </div><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/IMonad.html">IMonad</a>.<a href="../interfaces/IMonad.html#tap">tap</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/a5baaaf/src/monad.ts#L245">monad.ts:245</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/ab7b367/src/monad.ts#L244">monad.ts:244</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="toPromise" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>to<wbr/>Promise</span><a href="#toPromise" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -560,7 +581,7 @@ The returned monad will contain the same value as the input monad.</p>
 </div><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/IMonad.html">IMonad</a>.<a href="../interfaces/IMonad.html#toPromise">toPromise</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/a5baaaf/src/monad.ts#L20">monad.ts:20</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/ab7b367/src/monad.ts#L19">monad.ts:19</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member"><a id="yield" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>yield</span><a href="#yield" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -576,7 +597,7 @@ The returned monad will contain the same value as the input monad.</p>
 </div><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/IMonad.html">IMonad</a>.<a href="../interfaces/IMonad.html#yield">yield</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/a5baaaf/src/monad.ts#L341">monad.ts:341</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/alexlindberg1/monadic/blob/ab7b367/src/monad.ts#L343">monad.ts:343</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -598,6 +619,7 @@ The returned monad will contain the same value as the input monad.</p>
 <ul>
 <li><a href="#constructor" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-512"></use></svg><span>constructor</span></a></li>
 <li><a href="#value" class="tsd-is-private"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-1024"></use></svg><span>value</span></a></li>
+<li><a href="#defaultLogTransformer" class="tsd-is-private"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>default<wbr/>Log<wbr/>Transformer</span></a></li>
 <li><a href="#filter" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>filter</span></a></li>
 <li><a href="#flatMap" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>flat<wbr/>Map</span></a></li>
 <li><a href="#fold" class=""><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2048"></use></svg><span>fold</span></a></li>

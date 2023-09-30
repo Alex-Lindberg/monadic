@@ -295,7 +295,7 @@ export class Monad<T, E = Error> implements IMonad<T, E> {
    * const monad = Monad.fail(new Error("Something went wrong"));
    * const value = await monad.log(); // value === an error
    */
-  log<V = String, L = Console>(
+  log<V = string, L = Console>(
     logger?: L,
     transformer: (either: Either<T, E>) => V = (either) => this.defaultLogTransformer<V>(either),
   ): Monad<T, E> {

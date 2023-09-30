@@ -147,6 +147,7 @@ export declare class Monad<T, E = Error> implements IMonad<T, E> {
      * const result = await monad.fold(value => value + 1, error => error.message); // result === "Something went wrong"
      */
     fold<U>(onSuccess: (value: T) => U, onFailure: (error: E) => U): Promise<FoldResult<U>>;
+    private defaultLogTransformer;
     /**
      * Logs the value of the monad to the console. If the value is a promise, it will be awaited.
      * If the value is a failure, the error will be propagated. If the mapping function throws an error,
@@ -162,7 +163,7 @@ export declare class Monad<T, E = Error> implements IMonad<T, E> {
      * const monad = Monad.fail(new Error("Something went wrong"));
      * const value = await monad.log(); // value === an error
      */
-    log<L = Console>(logger?: L, transformer?: (either: Either<T, E>) => any): Monad<T, E>;
+    log<V = string, L = Console>(logger?: L, transformer?: (either: Either<T, E>) => V): Monad<T, E>;
     handleErrors(criteria: ErrorCriteria, handler: (error: E) => Monad<T, E>): Monad<T, E>;
     /**
      * Returns the value of the monad
