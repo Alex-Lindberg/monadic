@@ -62,7 +62,7 @@ class Failure<T, E> {
  * A class containing utility functions
  * @class Util
  */
-class Util {
+class MonadUtil {
   static of<T, E = Error>(value: T, error?: E): Monad<T, E> {
     if (error) {
       return new Monad(Promise.resolve(new Failure(error)));
@@ -301,26 +301,26 @@ export const toAsyncIterableMonad = <T, E>(monad: IMonad<T[], E>): IAsyncIterabl
       throw either.error; 
     }
   };
+  const mapAsync = async <U>(fn: (value: T) => Promise<U> | U): Promise<IMonad<U[], E>> => {
+    const either = await monad.yield();
+    if (either.isSuccess()) {
+      try {
+        const values: T[] = either.value;
+        const mappedValues = await Promise.all(values.map(value => fn(value)));
+        return Monad.of(mappedValues);
+      } catch (error) {
+        return Monad.fail<U[], E>(error as E);
+      }
+    } else {
+      return Monad.fail<U[], E>(either.error); 
+    }
+  };
+
   return {
     ...monad,
     forEachAsync,
+    mapAsync,
   };
 };
 
-
-  // const mapAsync = (callback: (value: T) => Promise<T> | T): IAsyncIterableMonad<T, E> => {
-  //     return toAsyncIterableMonad(monad.map((values) => values.map(callback)));
-  // };
-  // const filterAsync = (predicate: (value: T) => Promise<boolean> | boolean): IAsyncIterableMonad<T, E> => {
-  //     return toAsyncIterableMonad(monad.map((values) => values.filter(predicate)));
-  // };
-  // const toArray = async (): Promise<T[]> => {
-  //     const either = await monad.yield();
-  //     if (either.isSuccess()) {
-  //         return either.value;
-  //     } else {
-  //         throw either.error; // Handle error or rethrow
-  //     }
-  // };
-
-export { Success, Failure, Util };
+export { Success, Failure, MonadUtil };

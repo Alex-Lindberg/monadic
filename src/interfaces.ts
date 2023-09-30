@@ -24,10 +24,5 @@ export interface IMonad<T, E> {
 
 export interface IAsyncIterableMonad<T, E> extends IMonad<T[], E> {
   forEachAsync(callback: (value: T) => Promise<void> | void): Promise<void>;
-  // other methods
-  // toArray(): Promise<T[]>;
-  // mapAsync<U>(callback: (value: T) => Promise<U> | U): IAsyncIterableMonad<U, E>;
-  // filterAsync(predicate: (value: T) => Promise<boolean> | boolean): IAsyncIterableMonad<T, E>;
-  // ... additional async methods
+  mapAsync<U>(fn: (value: T) => Promise<U> | U): Promise<IMonad<U[], E>>;
 }
-
